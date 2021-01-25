@@ -85,14 +85,14 @@ responses:
 
   ## Welcome responses
   utter_bot_info:
-  - text: "Hello, I'm a personalised HeathBot powered by Rasa. I am used to diagnose various diseases based on user's symptoms.\n
+  - text: "Hello, I'm a personalised HeathBot powered by Rasa. \n
         How would you like to go ahead ? Want some more info or Would you like to register ?"
   utter_name:
   - text: "My name is health-Bot."
 
   ## FAQ Responses
   utter_faq/bot_develop:
-  - text: "I have been developed by Khushi, Priyav and Rishi for their minor project. I help people."
+  - text: " I help people. I am used to diagnose various diseases based on user's symptoms. I have been developed by Khushi, Priyav and Rishi for their minor project."
   utter_faq/ask_weather:
   - text: "Its really a cold weather!!"
   utter_faq/bot_challenge:
