@@ -1,0 +1,209 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+intents:
+- faq
+- ask_lower_stress
+- greet
+- ask_healthy_diet
+- goodbye
+- affirm
+- deny
+- out_of_scope
+- thankyou
+- want_to_register_affirm
+- want_to_register_deny
+- want_info_affirm
+- want_info_deny
+- low_value
+- high_value
+- normal_value
+- ask_form_questions
+- dont_know
+- discontinue
+- get_blood_pressure:
+    use_entites:
+      - blood_pressure
+- get_diabetes:
+    use_entities:
+      - diabetes
+- ask_name:
+    use_entities:
+      - name
+- tell_phone_number:
+    use_entities:
+      - number
+- tell_email:
+    use_entities:
+      - email
+
+slots:
+  name:
+    type: text
+  number:
+    type: text
+  email:
+    type: text
+  diabetes:
+    type: categorical
+    values:
+      - no
+      - normal
+      - high
+  blood_pressure:
+    type: categorical
+    values:
+      - low
+      - normal
+      - high
+  migraine:
+    type: categorical
+    values:
+      - yes
+      - no
+  frequent_cold:
+    type: categorical
+    values:
+      - yes
+      - no
+  frequent_cough:
+    type: categorical
+    values:
+      - yes
+      - no
+
+entities:
+  - name
+  - number
+  - diabetes
+  - blood_pressure
+  - email
+
+responses:
+
+  ## Welcome responses
+  utter_bot_info:
+  - text: "Hello, I'm a personalised HeathBot powered by Rasa. I am used to diagnose various diseases based on user's symptoms.\n
+        How would you like to go ahead ? Want some more info or Would you like to register ?"
+  utter_name:
+  - text: "My name is health-Bot."
+
+  ## FAQ Responses
+  utter_faq/bot_develop:
+  - text: "I have been developed by Khushi, Priyav and Rishi for their minor project. I help people."
+  utter_faq/ask_weather:
+  - text: "Its really a cold weather!!"
+  utter_faq/bot_challenge:
+  - text: I am a bot, powered by Rasa.
+
+  ## Profile Form responses
+  utter_continue:
+  - text: "Sorry, I don't quite understand. Do you want to continue?"
+  utter_form_information:
+  - text: "These details are for storing your medical history. This will help us to know you in a better way. Please tell the required answer. These details will not be shared with anyone."
+  utter_dont_know:
+  - text: "If you dont know or dont remember please say normal or no, as asked. You can modify these details later."
+  utter_ask_name:
+  - text: "What is your name ?"
+  utter_ask_number:
+  - text: "What is your mobile number ?"
+  utter_ask_email:
+  - text: "What is your email ?"
+  utter_ask_blood_pressure:
+  - text: "Do you have blood pressure ? If yes, is it high or low ? If no, please say normal"
+  utter_ask_migraine:
+  - text: "Do you have migraine?"
+  utter_ask_diabetes:
+  - text: "Do you have Diabetes? If yes, please mention whether it is high or low, If no, please answer no" 
+  utter_ask_frequent_cold:
+  - text: "Do you experience frequent cold?"
+  utter_ask_frequent_cough:
+  - text: "Do you experience frequent cough?"
+  utter_form_values:
+  - text: "Here is your info : \nName - {name}\nContact - {number}\nEmail - {email}\nBP - {blood_pressure}\nDiabetes - {diabetes}\nCold - {frequent_cold}\nCough - {frequent_cough}\nmigraine-{migraine}"
+
+  ## Normal responses from bot
+  utter_goodbye:
+  - text: Bye
+  utter_no_worries:
+  - text: "No problem :)"
+  utter_ask_continue:
+  - text: "Sorry, I don't quite understand. Do you want to continue?"
+
+  ## Responses for welcome stories
+  utter_ask_registration:
+  - text: "Then would you like to register ?"
+  utter_ask_want_more_info:
+  - text: "Do you want more information about me ?"
+  utter_ask_more_info:
+  - text: "What more information about me would you like to know?"
+
+forms:
+  profile_form:
+    name:
+      - type: from_entity
+        entity: name
+    number:
+      - type: from_entity
+        entity: number
+    email:
+      - type: from_entity
+        entity: email
+    blood_pressure:
+      - type: from_entity
+        entity: blood_pressure
+        intent: get_blood_pressure
+      - type: from_intent
+        intent: low_value
+        value: low
+      - type: from_intent
+        intent: high_value
+        value: high
+      - type: from_intent
+        intent: normal_value
+        value: normal
+      - type: from_intent
+        intent: deny
+        value: normal
+    diabetes:
+      - type: from_entity
+        entity: diabetes
+        intent: get_diabetes
+      - type: from_intent
+        intent: deny
+        value: no
+      - type: from_intent
+        intent: high_value
+        value: high
+      - type: from_intent
+        intent: normal_value
+        value: normal
+    frequent_cough:
+      - type: from_intent
+        intent: deny
+        value: no
+      - type: from_intent
+        intent: affirm
+        value: yes
+    frequent_cold:
+      - type: from_intent
+        intent: deny
+        value: no
+      - type: from_intent
+        intent: affirm
+        value: yes
+    migraine:
+      - type: from_intent
+        intent: deny
+        value: no
+      - type: from_intent
+        intent: affirm
+        value: yes 
+
+actions:
+  # - validate_profile_form
+  - action_submit
+  # - action_ask_diabetes
+  # - action_ask_blood_pressure

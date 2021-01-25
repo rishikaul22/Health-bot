@@ -1,0 +1,65 @@
+version: "2.0"
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: respond to FAQs
+  steps:
+  - intent: faq
+  - action: utter_faq
+  wait_for_user_input: false
+
+# - rule: Activate form
+#   steps:
+#   - intent: want_to_register_affirm
+#   - action: profile_form
+#   - active_loop: profile_form
+
+- rule: faq_between_forms
+  condition:
+  # Condition that form is active.
+  - active_loop: profile_form
+  steps:
+  # This unhappy path handles the case of an intent `chitchat`.
+  - intent: faq
+  - action: utter_faq
+  - action: profile_form
+  - active_loop: profile_form
+
+- rule: registration_continue_form_questions
+  condition:
+  # Condition that form is active.
+  - active_loop: profile_form
+  steps:
+  - intent: ask_form_questions
+  - action: utter_form_information
+  - action: profile_form
+  - active_loop: profile_form
+
+- rule: registration_continue_dont_know
+  condition:
+  # Condition that form is active.
+  - active_loop: profile_form
+  steps:
+  - intent: dont_know
+  - action: utter_dont_know
+  - action: profile_form
+  - active_loop: profile_form
+  
+- rule: Submit form
+  condition:
+  # Condition that form is active.
+  - active_loop: profile_form
+  steps:
+  # Form is deactivated
+  - action: profile_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  # The actions we want to run when the form is submitted.
+  - action: action_submit
+  - action: utter_form_values

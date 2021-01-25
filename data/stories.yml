@@ -1,0 +1,159 @@
+version: "2.0"
+
+stories:
+
+- story: welcome
+  steps:
+  - intent: greet
+  - action: utter_name
+  - action: utter_bot_info
+  - checkpoint: check_asked_question
+
+- story: happy_registration
+  steps:
+  - checkpoint: check_asked_question
+  - or:
+    - intent: want_to_register_affirm
+    - intent: affirm
+  - action: profile_form
+  - active_loop: profile_form
+
+# - story: registration_continue_form_questions
+#   steps:
+#   - checkpoint: check_asked_question
+#   - or:
+#     - intent: want_to_register_affirm
+#     - intent: affirm
+#   - action: profile_form
+#   - active_loop: profile_form
+#   - intent: ask_form_questions
+#   - action: utter_form_information
+#   - action: profile_form
+#   - active_loop: profile_form
+
+# - story: registration_continue_dont_know
+#   steps:
+#   - checkpoint: check_asked_question
+#   - or:
+#     - intent: want_to_register_affirm
+#     - intent: affirm
+#   - action: profile_form
+#   - active_loop: profile_form
+#   - intent: dont_know
+#   - action: utter_dont_know
+#   - action: profile_form
+#   - active_loop: profile_form
+
+- story: registration_continue
+  steps:
+  - checkpoint: check_asked_question
+  - or:
+    - intent: want_to_register_affirm
+    - intent: affirm
+  - action: profile_form
+  - active_loop: profile_form
+  - intent: discontinue
+  - action: utter_continue
+  - intent: affirm
+  - action: profile_form
+  - active_loop: profile_form
+
+- story: registration_stop
+  steps:
+  - checkpoint: check_asked_question
+  - or:
+    - intent: want_to_register_affirm
+    - intent: affirm
+  - action: profile_form
+  - active_loop: profile_form
+  - intent: discontinue
+  - action: utter_ask_continue
+  - intent: deny
+  - action: action_deactivate_loop
+  - active_loop: null
+  - action: utter_goodbye
+
+- story: happy_more_info
+  steps:
+  - checkpoint: check_asked_question
+  - intent: want_info_affirm
+  - action: utter_ask_more_info
+
+- story: unhappy_more_info
+  steps:
+  - checkpoint: check_asked_question
+  - intent: want_info_deny
+  - action: utter_ask_registration
+  - checkpoint: check_deny_both
+
+- story: unhappy_registration
+  steps:
+  - checkpoint: check_asked_question
+  - intent: want_to_register_deny
+  - action: utter_ask_want_more_info
+  - checkpoint: check_deny_both
+
+- story: both_deny
+  steps: 
+  - checkpoint: check_deny_both
+  - or:
+    - intent: want_info_deny
+    - intent: want_to_register_deny
+  - action: utter_no_worries
+  - action: utter_goodbye
+
+- story: not_both_deny
+  steps: 
+  - checkpoint: check_deny_both
+  - or:
+    - intent: want_info_affirm
+    - intent: affirm
+  - action: utter_ask_more_info
+
+  # - action: utter_ask_name
+  # - intent: ask_name
+  #   entities:
+  #   - name
+  # - action: utter_greet
+  # - intent: affirm
+  # - action: utter_ask_exercise
+  # - intent: get_exercise
+  #   entities:
+  #   - exercise
+  # - action: utter_happy
+  # - action: utter_ask_diet
+  # - intent: get_diet
+  #   entities:
+  #   - diet
+  # - action: utter_happy
+  # - action: utter_slots_values
+
+# - story: take_user_info
+#   steps:
+#   - intent: greet
+#   - action: utter_name
+#   - action: profile_form
+#   - active_loop: profile_form
+#   - action: utter_form_values
+
+
+# - story: ask diet questions
+#   steps:
+#   - intent: ask_healthy_diet
+#   - action: utter_diet_info
+
+# - story: sad_exercise_and_diet_info
+#   steps:
+#   - intent: greet
+#   - action: utter_name
+#   - action: utter_ask_name
+#   - intent: ask_name
+#     entities:
+#     - name
+#   - action: utter_greet
+#   - intent: deny
+#   - action: utter_happy
+#   - action: utter_goodbye
+
+
+

@@ -1,0 +1,442 @@
+version: "2.0"
+nlu:
+- intent: faq/bot_develop
+  examples: |
+    - What do you do?
+    - How is this bot useful for me?
+    - What do people use you for?
+    - How is this helpful?
+    - Who made you?
+    - Are you free to use or cost something?
+
+- intent: faq/ask_weather
+  examples: |
+    - What's the weather like today?
+    - Does it look sunny outside today?
+    - Oh, do you mind checking the weather for me please?
+    - I like sunny days in Berlin.
+
+- intent: faq/bot_challenge
+  examples: |
+    - Who are you?
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hiiii
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: thankyou
+  examples: |
+    - ok thanks a lot
+    - thank you so much
+    - okay, thank you so much
+    - thank you
+    - thank you for talking with me
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - sure
+    - ok
+    - why not
+    - ok great
+    - yes I did
+    - yeah, great
+    - pretty good
+    - fine
+    - you bet
+    - I sure did
+    - more or less
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - none
+    - absolutely not
+    - no thanks
+    - didn't do any
+    - no I didn't
+    - could have been better
+    - not great
+    - nope
+
+- intent: ask_lower_stress
+  examples: |
+    - What do I do if I'm too stressed?
+    - How can I lower my stress level?
+    - What are some good ways to lower stress?
+    - What are good ways to relax?
+    - what are some things I can do to lower my stress?
+    - i am very stressed, what do i do
+
+- intent: ask_healthy_diet
+  examples: |
+    - What's considered a healthy diet?
+    - What's considered a good diet?
+    - How do I follow a healthy diet?
+    - What's an example of healthy diet?
+    - How do I eat healthy?
+    - what should i eat to make it a healthy diet?
+
+- intent: ask_exercise
+  examples: |
+    - What's a good amount of exercise for someone in thirties?
+    - How much exercise should I be getting?
+    - How much exercise is recommended?
+    - Is walking once a day enough exercise?
+    - How much exercise should I do every day?
+    - How many times per week should I go to the gym
+
+# - intent: get_exercise
+#   examples: |
+#     - yes, i went for a [run](exercise)
+#     - an hour of [yoga](exercise)
+#     - yes, i went for a [hike](exercise)
+#     - Yes, i took the dog for a [walk](exercise)
+#     - Yeah i played [tennis](exercise)
+#     - I went [swimming](exercise)
+#     - Took a [spin class](exercise)
+#     - did some [boxing](exercise)
+#     - [rock climbing](exercise)
+#     - played some [basketball](exercise)
+#     - played [football](exercise)
+#     - I did a [workout](exercise) video
+#     - went to [gym](exercise)
+#     - I played [cricket](exercise)
+#     - went on a [walk](exercise) with my friends
+#     - did some [yoga](exercise)
+#     - did some [skating](exercise)
+    
+# - intent: get_diet
+#   examples: |
+#     - lots of [fruits and vegetables](diet)
+#     - I ate [salad](diet)
+#     - too many [snacks](diet)
+#     - too many [sweets](diet)
+#     - too much [junk food](diet)
+#     - a lot of [carbs](diet)
+#     - had some [fatty food](diet)
+#     - had some [veggies](diet)
+#     - I ate some [cereals](diet)
+#     - i had some [parathas](diet) in my lunch
+#     - I ate [dal and rice](diet)
+#     - ordered a [pizza](diet)
+#     - went out to have a [sandwich](diet)
+#     - had some [chinese](diet) dish
+
+- intent: out_of_scope
+  examples: |
+    - that's not what i want to do
+    - wait stop
+    - you are no help
+    - this is no help at all
+    - how old are you?
+    - I want to order a pizza
+    - tell me the whether
+    - this isn't working
+    - I already told you that
+    - don't like that
+    - I don't want to tell you that
+    - none of your business
+    - that's not right
+    - stop asking
+    - nevermind
+    - I want to do something else
+    - I changed my mind
+
+- intent: ask_name
+  examples: |
+    - my name is [Priyav Mehta](name)
+    - my name is [Khushi Jashnani](name)
+    - my name is [Rishi Kaul](name)
+    - my name is [Viraj Shah](name)
+    - my name is [Ashutosh Naik](name)
+    - my name is [Yug Vajani](name)
+    - my name is [Harsh Jain](name)
+    - my name is [Rahul Siroya](name)
+    - my name is [Yaksha Jain](name)
+    - my name is [Vrutik Shah](name)
+    - my name is [Tirth Shah](name)
+    - my name is [Surbhi Jain](name)
+    - my name is [Cherry Dhoka](name)
+    - my name is [Darsh Mehta](name)
+    - people call me [Jainam Jain](name)
+    - people call me [Jay Mehta](name)
+    - people call me [Vaidehi Vatsaraj](name)
+    - people call me [Chirag Jain](name)
+    - people call me [Luv Gupta](name)
+    - people call me [Raj Gorhekar](name)
+    - people call me [Ritik Singh](name)
+    - people call me [Shubham Shetty](name)
+    - people call me [Ebrahim Hirani](name)
+    - people call me [Karan Shah](name)
+
+- intent: tell_phone_number
+  examples: |
+    - My phone number is [8928691948](number)
+    - My phone number is [7928241948](number)
+    - My phone number is [8928691348](number)
+    - My phone number is [9838691948](number)
+    - My phone number is [8934213438](number)
+    - My phone number is [7834691948](number)
+    - My phone number is [9294691948](number)
+    - My phone number is [9003691948](number)
+    - My phone number is [7032691948](number)
+    - My phone number is [9923691948](number)
+    - My number is [9969780848](number)
+    - My number is [9294691948](number)
+    - My number is [7032691948](number)
+    - My number is [8934213438](number)
+    - My number is [7834691948](number)
+    - My number is [9969340848](number)
+    - My number is [7928241948](number)
+    - My number is [9969380848](number)
+    - My number is [9838691948](number)
+    - My number is [8928691348](number)
+    - [9969738242](number)
+    - [7996681255](number)
+    - [9764181888](number)
+    - [8935489155](number)
+    - [9155755432](number)
+    - [7361589252](number)
+    - [7882369945](number)
+    - [9969782355](number)
+    - [7996845527](number)
+    - [9819367255](number)
+
+
+- intent: tell_email
+  examples: |
+    - My email id is [khushi12@spit.ac.in](email)
+    - My email id is [priyav123@gmail.com](email)
+    - My email id is [rishi235@gmail.com](email)
+    - My email id is [ashutoshnaik@gmail.com](email)
+    - My email id is [ruchanargunde@spit.ac.in](email)
+    - My email id is [virajshah1709@gmail.com](email)
+    - My email id is [yugvajani789@gmail.com](email)
+    - My email id is [priyavmehta7@spit.ac.in](email)
+    - My email id is [khushi1872jashnani@gmail.com](email)
+    - My email id is [rishikaul@spit.ac.in](email)
+    - My email is [khushi@gmail.com](email)
+    - My email is [priyav123@gmail.com](email)
+    - My email is [rishi235@gmail.com](email)
+    - My email is [rucha.nargunde@spit.ac.in](email)
+    - My email is [ashutoshnaik@gmail.com](email)
+    - My email is [virajshah1709@gmail.com](email)
+    - My email is [yugvajani789@gmail.com](email)
+    - My email is [priyavmehta7@spit.ac.in](email)
+    - My email is [khushi1872jashnani@gmail.com](email)
+    - My email is [rishikaul@gmail.com](email)
+    - [khushi@gmail.com](email)
+    - [priyav123@gmail.com](email)
+    - [rishi235@gmail.com](email)
+    - [ruchanargunde@gmail.com](email)
+    - [ashutoshnaik@spit.ac.in](email)
+    - [virajshah1709@gmail.com](email)
+    - [yugvajani789@gmail.com](email)
+    - [priyavmehta7@gmail.com](email)
+    - [khushi1872jashnani@spit.ac.in](email)
+    - [rishikaul@gmail.com](email)
+
+- intent: low_value
+  examples: |
+    - low
+    - less
+    - negligible
+    - very low
+    - little
+    - very less
+    - decreased level
+    - reduced
+
+- intent: normal_value
+  examples: |
+    - normal
+    - on the borderline
+    - borderline
+    - quite normal
+    - its normal
+
+- intent: high_value
+  examples: |
+    - high
+    - high level
+    - higher
+    - large
+    - elevated
+    - high point
+    - soared high
+    - rose high
+
+
+- intent: get_blood_pressure
+  examples: |
+    - i have [low](blood_pressure) blood_pressure
+    - i have [normal](blood_pressure) blood_pressure
+    - i have [high](blood_pressure) blood_pressure
+    - my blood_pressure is [low](blood_pressure)
+    - my blood_pressure is [normal](blood_pressure)
+    - my blood_pressure is [high](blood_pressure)
+
+- intent: get_diabetes
+  examples: |
+    - i have [no](diabetes) diabetes
+    - i have [normal](diabetes) diabetes
+    - i have [high](diabetes) diabetes
+    - my diabetes is [no](diabetes)
+    - my diabetes is [normal](diabetes)
+    - my diabetes is [high](diabetes)
+
+- intent: want_to_register_affirm
+  examples: |
+    - Yes, i would like to register myself
+    - Yes, i want to register
+    - Yes i am willing to register
+    - yes, i would like to register first
+    - of course i would like to register
+    - yeah, i want to register
+    - Go ahead with registration
+    - Willing to give my details
+    - no problem in registering
+    - yeah, take my details
+    - yes, i will give my details
+    - Latter
+
+- intent: want_to_register_deny
+  examples: |
+    - no, i dont want to register myself
+    - no, i dont want to register
+    - i am not willing to register
+    - nope, i dont want to register now
+    - i dont want to go ahead with registration
+    - not willing to give my details
+    - not willing to give my details right now
+    - not now maybe in future
+    - no, i dont want to give my details
+    - no i am not interested in registering here
+    - not interested in giving details
+
+- intent: want_info_affirm
+  examples: |
+    - Yes, I would like to get some information.
+    - Information.
+    - info.
+    - Yes, info.
+    - information first.
+    - Yes, i would like to know about something first.
+    - can you give some information first?.
+    - former
+    - Yes the former one.
+
+- intent: want_info_deny
+  examples: |
+    - No, i dont want any information.
+    - no info
+    - I dont need any information currently.
+    - not information
+    - Ok no information
+    - not the former one
+    - No information as such
+    - No information as of now
+    - No information right now
+
+- intent: ask_form_questions
+  examples: |
+    - Why do you want this?
+    - Is this of any help?
+    - what is the use of asking blood pressure?
+    - is asking blood pressure of any use?
+    - what is the use of asking bp?
+    - is taking bp details of any use?
+    - why do u want to know about migraine?
+    - is migraine information of any use?
+    - why do you want diabetes?
+    - what is the use of asking for diabetes?
+    - is this of any information
+    - will diabetes help you?
+    - why do u want to ask for cold and cough?
+    - why do u want to know about cold?
+    - why do u want to know about cough?
+    - is this necesasary?
+    - how will bp help you?
+    - how will blood pressure help you?
+    - how will diabetes help you?
+    - how will migraine help you?
+    - how will cold and cough help you?
+    - how will cold help you?
+    - how will cough help you?
+
+- intent: dont_know
+  examples: |
+    - i dont really know about this
+    - i do not remember about this
+    - i dont know this, please ask something else
+    - sorry, but i dont knwo
+    - i am not sure with this
+    - i cannot say correct answer
+    - i am unable to recollect
+    - i am not able to recollect
+    - what if i dont remember?
+    - what should i say if i dont know about this?
+    - i have no idea
+    - no clue
+    - no idea
+    - cant say
+    - dont know
+    - dont remember
+
+- intent: discontinue
+  examples: |
+    - please stop
+    - i dont want to continue
+    - stop
+    - please, i dont want to answer
+    - discontinue
+    - will you please stop?
+    - please will you stop?
+    - please can we do it later?
+    - can we do it stop?
+    - can u stop?
+    - i want to stop
+    - i dont want to go ahead
