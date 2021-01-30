@@ -64,25 +64,25 @@ rules:
   - action: action_submit
   - action: utter_form_values
 
-- rule: registration_continue
-  condition:
-  # Condition that form is active.
-  - active_loop: profile_form
-  steps:
-  - intent: discontinue
-  - action: utter_continue
-  - intent: affirm
-  - action: profile_form
-  - active_loop: profile_form
+# - rule: registration_continue
+#   condition:
+#   # Condition that form is active.
+#   - active_loop: profile_form
+#   steps:
+#   - intent: discontinue
+#   - action: utter_continue
+#   - intent: affirm
+#   - action: profile_form
+#   - active_loop: profile_form
 
-- rule: registration_discontinue
-  condition:
-  # Condition that form is active.
-  - active_loop: profile_form
-  steps:
-  - intent: discontinue
-  - action: utter_continue
-  - intent: deny
-  - action: profile_form
-  - active_loop: null
-  - action: utter_no_worries
+# - rule: registration_discontinue
+#   condition:
+#   # Condition that form is active.
+#   - active_loop: profile_form
+#   steps:
+#   - intent: discontinue
+#   - action: utter_continue
+#   - intent: deny
+#   - action: profile_form
+#   - active_loop: null
+#   - action: utter_no_worries

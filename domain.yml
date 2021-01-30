@@ -38,6 +38,11 @@ intents:
 - tell_email:
     use_entities:
       - email
+- take_symptoms:
+    use_entities:
+      - symptoms
+      - duration
+      - severity
 
 slots:
   name:
@@ -73,6 +78,12 @@ slots:
     values:
       - yes
       - no
+  symptoms:
+    type: list
+  duration:
+    type: list
+  severity:
+    type: list
 
 entities:
   - name
@@ -80,6 +91,9 @@ entities:
   - diabetes
   - blood_pressure
   - email
+  - symptoms
+  - duration
+  - severity
 
 responses:
 
@@ -124,6 +138,12 @@ responses:
   utter_form_values:
   - text: "Here is your info : \nName - {name}\nContact - {number}\nEmail - {email}\nBP - {blood_pressure}\nDiabetes - {diabetes}\nCold - {frequent_cold}\nCough - {frequent_cough}\nmigraine-{migraine}"
 
+  ## Symptom form responses
+  utter_ask_symptom:
+  - text: "Can you tell me what issues are you facing?"
+  utter_ask_duration:
+  - text: "Since when are you facing these issues ?"
+  
   ## Normal responses from bot
   utter_goodbye:
   - text: Bye
@@ -201,6 +221,21 @@ forms:
       - type: from_intent
         intent: affirm
         value: yes 
+  
+  symptoms_form:
+    symptoms: 
+      - type: from_entity
+        entity: symptoms
+      # - type: from_intent
+      #   intent: symptom
+      #   value: 
+    duration:
+      - type: from_entity
+        entity: duration
+      # - type: from_intent
+      #   intent: duration
+
+
 
 actions:
   # - validate_profile_form
