@@ -10,7 +10,7 @@ app.config['SECRET_KEY'] = 'healthbot'
 
 ##################### Setting up mongo-DB database #####################
 connection_url = 'mongodb+srv://priyavmehta:priyavmehta@health-bot.pe09f.mongodb.net/<healthbot>?retryWrites=true&w=majority'
-client = pymongo.MongoClient(connection_url)
+client = pymongo.MongoClient(connection_url, replicaSet="rs0")
 
 # Database Name
 Database = client.get_database('healthbot')
