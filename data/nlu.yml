@@ -128,43 +128,6 @@ nlu:
     - How much exercise should I do every day?
     - How many times per week should I go to the gym
 
-# - intent: get_exercise
-#   examples: |
-#     - yes, i went for a [run](exercise)
-#     - an hour of [yoga](exercise)
-#     - yes, i went for a [hike](exercise)
-#     - Yes, i took the dog for a [walk](exercise)
-#     - Yeah i played [tennis](exercise)
-#     - I went [swimming](exercise)
-#     - Took a [spin class](exercise)
-#     - did some [boxing](exercise)
-#     - [rock climbing](exercise)
-#     - played some [basketball](exercise)
-#     - played [football](exercise)
-#     - I did a [workout](exercise) video
-#     - went to [gym](exercise)
-#     - I played [cricket](exercise)
-#     - went on a [walk](exercise) with my friends
-#     - did some [yoga](exercise)
-#     - did some [skating](exercise)
-    
-# - intent: get_diet
-#   examples: |
-#     - lots of [fruits and vegetables](diet)
-#     - I ate [salad](diet)
-#     - too many [snacks](diet)
-#     - too many [sweets](diet)
-#     - too much [junk food](diet)
-#     - a lot of [carbs](diet)
-#     - had some [fatty food](diet)
-#     - had some [veggies](diet)
-#     - I ate some [cereals](diet)
-#     - i had some [parathas](diet) in my lunch
-#     - I ate [dal and rice](diet)
-#     - ordered a [pizza](diet)
-#     - went out to have a [sandwich](diet)
-#     - had some [chinese](diet) dish
-
 - intent: out_of_scope
   examples: |
     - that's not what i want to do
@@ -440,3 +403,64 @@ nlu:
     - can u stop?
     - i want to stop
     - i dont want to go ahead
+
+- intent: take_symptoms
+  examples: |
+    - having [light](severity) [fever](symptoms) since a [week](duration)
+    - a [high](severity) [cold](symptoms).
+    - Experiencing [headache](symptoms) from [2 days](duration).
+    - I'm having a [difficulty in breathing](symptoms) since [morning](duration).
+    
+- lookup: symptoms
+  examples: |
+    - cough
+    - breathing issues
+    - breating problems
+    - breathlessness
+    - hairloss
+    - vomitting
+    - stomachache
+    - dizziness
+
+- lookup: duration
+  examples: |
+    - yesterday
+    - afternoon
+    - evening
+    - 1 day
+    - one day
+    - two days
+    - 3 days
+    - 4 days
+    - 5 days
+    - 6 days
+    - three days
+    - four days
+    - five days
+    - six days
+    - last week
+    - 7 days
+    - seven days
+    - last month
+    - 1 week
+    - one week
+    - two weeks
+    - 2 weeks
+    - 3 weeks
+    - three weeks
+    - 4 weeks
+    - four weeks
+    - 1 month
+    - one month
+    - 2 months
+    - two months
+
+- lookup: severity
+  examples: |
+    - severe
+    - mild
+    - moderate
+    - slight
+    - a bit high
+    - a bit light
+    

@@ -36,6 +36,13 @@ pipeline:
   - name: DIETClassifier
     epochs: 100
   - name: EntitySynonymMapper
+  - name: RegexEntityExtractor
+  - name: CRFEntityExtractor
+    features: [
+                ["low", "title", "upper"],
+                ["bias", "low", "prefix5", "prefix2", "suffix5", "suffix3", "suffix2", "upper", "title", "digit", "pattern"],
+                ["low", "title", "upper"]
+              ]
   - name: ResponseSelector
     epochs: 100
   - name: ResponseSelector

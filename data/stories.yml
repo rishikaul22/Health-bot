@@ -63,3 +63,13 @@ stories:
   - slot_was_set:
     - name:
   - action: action_session_start
+
+- story: taking_symptoms
+  steps:
+  - intent: take_symptoms
+    entities:
+    - symptoms
+    - severity
+    - duration
+  # - slot_was_set:
+  #   - symptom

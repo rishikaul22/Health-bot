@@ -92,17 +92,17 @@ class ActionSubmit(Action):
 
         print("Calling function")
         print(name)
-        resp = create_user(
-            name=name,
-            email=email,
-            number=number,
-            diabetes=diabetes,
-            blood_pressure=blood_pressure,
-            frequent_cold=frequent_cold,
-            frequent_cough=frequent_cough,
-            migraine=migraine
-        )
-        print(resp)
+        # resp = create_user(
+        #     name=name,
+        #     email=email,
+        #     number=number,
+        #     diabetes=diabetes,
+        #     blood_pressure=blood_pressure,
+        #     frequent_cold=frequent_cold,
+        #     frequent_cough=frequent_cough,
+        #     migraine=migraine
+        # )
+        # print(resp)
         dispatcher.utter_message(template="utter_form_values",
                                  name=name,
                                  number=number,
@@ -112,6 +112,6 @@ class ActionSubmit(Action):
                                  frequent_cold = frequent_cold,
                                  frequent_cough = frequent_cough,
                                  migraine = migraine
-                                 )
+                                )
 
 
