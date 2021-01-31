@@ -64,12 +64,16 @@ stories:
     - name:
   - action: action_session_start
 
+# - story: taking_symptoms
+#   steps:
+#   - intent: take_symptoms
+#     entities:
+#     - symptoms
+#     - severity
+#     - duration
+
 - story: taking_symptoms
   steps:
   - intent: take_symptoms
-    entities:
-    - symptoms
-    - severity
-    - duration
-  # - slot_was_set:
-  #   - symptom
+  - action: symptoms_form
+  - active_loop: symptoms_form

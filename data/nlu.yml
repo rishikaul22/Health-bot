@@ -407,7 +407,7 @@ nlu:
 - intent: take_symptoms
   examples: |
     - having [light](severity) [fever](symptoms) since a [week](duration)
-    - a [high](severity) [cold](symptoms).
+    - a [high](severity) [cold](symptoms) past [4 days](duration).
     - Experiencing [headache](symptoms) from [2 days](duration).
     - I'm having a [difficulty in breathing](symptoms) since [morning](duration).
     
@@ -422,38 +422,46 @@ nlu:
     - stomachache
     - dizziness
 
-- lookup: duration
+- regex: number
   examples: |
-    - yesterday
-    - afternoon
-    - evening
-    - 1 day
-    - one day
-    - two days
-    - 3 days
-    - 4 days
-    - 5 days
-    - 6 days
-    - three days
-    - four days
-    - five days
-    - six days
-    - last week
-    - 7 days
-    - seven days
-    - last month
-    - 1 week
-    - one week
-    - two weeks
-    - 2 weeks
-    - 3 weeks
-    - three weeks
-    - 4 weeks
-    - four weeks
-    - 1 month
-    - one month
-    - 2 months
-    - two months
+    - \d{10}
+
+- regex: email
+  examples: |
+    - ^[a-zA-Z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$
+
+# - lookup: duration
+#   examples: |
+#     - yesterday
+#     - afternoon
+#     - evening
+#     - 1 day
+#     - one day
+#     - two days
+#     - 3 days
+#     - 4 days
+#     - 5 days
+#     - 6 days
+#     - three days
+#     - four days
+#     - five days
+#     - six days
+#     - last week
+#     - 7 days
+#     - seven days
+#     - last month
+#     - 1 week
+#     - one week
+#     - two weeks
+#     - 2 weeks
+#     - 3 weeks
+#     - three weeks
+#     - 4 weeks
+#     - four weeks
+#     - 1 month
+#     - one month
+#     - 2 months
+#     - two months
 
 - lookup: severity
   examples: |

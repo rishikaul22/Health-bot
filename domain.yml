@@ -79,10 +79,14 @@ slots:
       - yes
       - no
   symptoms:
-    type: list
+    type: text
   duration:
-    type: list
+    type: text
   severity:
+    type: text
+  more_symptoms:
+    type: text
+  all_symptoms:
     type: list
 
 entities:
@@ -139,10 +143,16 @@ responses:
   - text: "Here is your info : \nName - {name}\nContact - {number}\nEmail - {email}\nBP - {blood_pressure}\nDiabetes - {diabetes}\nCold - {frequent_cold}\nCough - {frequent_cough}\nmigraine-{migraine}"
 
   ## Symptom form responses
-  utter_ask_symptom:
+  utter_ask_symptoms:
   - text: "Can you tell me what issues are you facing?"
   utter_ask_duration:
   - text: "Since when are you facing these issues ?"
+  utter_ask_severity:
+  - text: "What is the severity? Eg. mild, moderate or severe ?"
+  utter_symptom_form_values:
+  - text: "Here is your symptom info : \nSymptom - {symptoms}\nDuration - {duration}\nSeverity - {severity}"
+  utter_ask_more_symptoms:
+  - text: "Do you have any more symptoms ?"
   
   ## Normal responses from bot
   utter_goodbye:
@@ -226,19 +236,21 @@ forms:
     symptoms: 
       - type: from_entity
         entity: symptoms
-      # - type: from_intent
-      #   intent: symptom
-      #   value: 
     duration:
       - type: from_entity
         entity: duration
-      # - type: from_intent
-      #   intent: duration
-
-
+    severity:
+      - type: from_entity
+        entity: severity
+    more_symptoms:
+      - type: from_intent
+        intent: deny
+        value: no
+      - type: from_intent
+        intent: affirm
+        value: yes
 
 actions:
-  # - validate_profile_form
   - action_submit
-  # - action_ask_diabetes
-  # - action_ask_blood_pressure
+  - action_symptoms_form_submit
+  - validate_symptoms_form

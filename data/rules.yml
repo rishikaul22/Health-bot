@@ -50,7 +50,7 @@ rules:
   - action: profile_form
   - active_loop: profile_form
   
-- rule: Submit form
+- rule: Submit_Profile_form
   condition:
   # Condition that form is active.
   - active_loop: profile_form
@@ -63,6 +63,17 @@ rules:
   # The actions we want to run when the form is submitted.
   - action: action_submit
   - action: utter_form_values
+
+- rule: Submit_Symptoms_form
+  condition:
+  - active_loop: symptoms_form
+  steps:
+  - action: symptoms_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_symptoms_form_submit
+  - action: utter_symptom_form_values
 
 # - rule: registration_continue
 #   condition:

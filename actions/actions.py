@@ -114,4 +114,82 @@ class ActionSubmit(Action):
                                  migraine = migraine
                                 )
 
+class SymptomsForm(Action):
 
+    def name(self):
+        return "symptoms_form"
+
+class SymptomsFormSubmit(Action):
+
+    def name(self):
+        return "action_symptoms_form_submit"
+
+    def run(self, dispatcher, tracker: Tracker, domain: "DomainDict"):
+    
+        symptoms = tracker.get_slot('symptoms')
+        duration = tracker.get_slot('duration')
+        severity = tracker.get_slot('severity')
+
+        dispatcher.utter_message(template="utter_symptom_form_values",
+                                 symptoms=symptoms,
+                                 duration=duration,
+                                 severity=severity
+                                )
+
+class ValidateRestaurantForm(FormValidationAction):
+    def name(self):
+        return "validate_symptoms_form"
+
+    # async def required_slots(
+    #     self,
+    #     slots_mapped_in_domain: List[Text],
+    #     dispatcher: "CollectingDispatcher",
+    #     tracker: "Tracker",
+    #     domain: "DomainDict",
+    # ):
+
+    #     if tracker.slots.get("more_symptoms") == "yes":
+    #         print("IN YES")
+
+    #     elif tracker.slots.get("more_symptoms") == "no":
+    #         print("IN NO")
+
+    #     return slots_mapped_in_domain
+    
+    def validate_more_symptoms(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: "DomainDict",
+    ):
+        symps = tracker.get_slot('all_symptoms')
+        print(symps)
+
+        if symps == None:
+            index = 0
+            symps = list()
+        else:
+            index = len(symps)
+
+        val = {
+            "symptom": tracker.get_slot('symptoms'),
+            "duration": tracker.get_slot('duration'),
+            "severity": tracker.get_slot("severity")
+        }
+
+        s = dict()
+        s[index] = val
+        symps.append(s)
+
+        if slot_value == "yes":
+            return {
+                "symptoms": None,
+                "more_symptoms": None,
+                "duration": None,
+                "severity": None,
+                "all_symptoms": symps
+            }
+        else:
+            print("IN NO")
+            return {"more_symptoms": slot_value, "all_symptoms": symps}
