@@ -10,7 +10,7 @@ app.config['SECRET_KEY'] = 'healthbot'
 
 ##################### Setting up mongo-DB database #####################
 connection_url = 'mongodb+srv://priyavmehta:priyavmehta@health-bot.pe09f.mongodb.net/<healthbot>?retryWrites=true&w=majority'
-client = pymongo.MongoClient(connection_url, replicaSet="rs0")
+client = pymongo.MongoClient(connection_url)
 
 # Database Name
 Database = client.get_database('healthbot')
@@ -79,6 +79,30 @@ class UserLogin(Resource):
 api = Api(app)
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')
+
+# fever
+# headache
+# skin itching
+# throat pain
+
+# 1,2,3,4,5
+# 1,2,3,4
+# 2,4
+# 5
+
+# arthritis : 4/6 => 67 %
+# malaria : 5/6 => 82 %
+# hepatitis : 7/9 => 77 %
+
+# Malaria : [Chills, fever, sweating, shivering, nausea, vomiting, fast heart rate, headache] => 75 %
+# Mumps : [Swollen /painful salivary glands, fever, headache, fatigue, appetite loss, difficulty in swallowing or soreness, neck swelling.], => 20 %
+# Lung Cancer : [Cough, chest pain, wheezing and weight loss.] => 0 %
+
+# 1,2
+# 1,2
+# 1
+# 3
+# Ans : 1
 
 if __name__ == '__main__':
     app.run(debug=True)

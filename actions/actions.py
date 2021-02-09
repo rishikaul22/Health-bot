@@ -139,22 +139,6 @@ class SymptomsFormSubmit(Action):
 class ValidateRestaurantForm(FormValidationAction):
     def name(self):
         return "validate_symptoms_form"
-
-    # async def required_slots(
-    #     self,
-    #     slots_mapped_in_domain: List[Text],
-    #     dispatcher: "CollectingDispatcher",
-    #     tracker: "Tracker",
-    #     domain: "DomainDict",
-    # ):
-
-    #     if tracker.slots.get("more_symptoms") == "yes":
-    #         print("IN YES")
-
-    #     elif tracker.slots.get("more_symptoms") == "no":
-    #         print("IN NO")
-
-    #     return slots_mapped_in_domain
     
     def validate_more_symptoms(
         self,
@@ -193,3 +177,18 @@ class ValidateRestaurantForm(FormValidationAction):
         else:
             print("IN NO")
             return {"more_symptoms": slot_value, "all_symptoms": symps}
+
+class Login(Action):
+    def name(self):
+        return "action_login"
+    
+    def run(self, dispatcher, tracker: Tracker, domain: "DomainDict"):
+        
+        email_id = "khushi@gmail.com"
+        if tracker.get_slot('email') == email_id:
+            print("IN LOGIN SUCCESS")
+            SlotSet('loggedin', True)
+            dispatcher.utter_message(template="utter_login_success")
+        else:
+            print("IN LOGIN FAILURE")
+            dispatcher.utter_message(template="utter_wrong_email")

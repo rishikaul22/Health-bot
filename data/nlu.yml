@@ -320,6 +320,16 @@ nlu:
     - no i am not interested in registering here
     - not interested in giving details
 
+- intent: want_to_login_affirm
+  examples: |
+    - yes, i want to login
+    - login
+    - want to login
+    - interested in logging in
+    - log me in
+    - login me
+    - yes, i have my account
+
 - intent: want_info_affirm
   examples: |
     - Yes, I would like to get some information.
@@ -410,6 +420,7 @@ nlu:
     - a [high](severity) [cold](symptoms) past [4 days](duration).
     - Experiencing [headache](symptoms) from [2 days](duration).
     - I'm having a [difficulty in breathing](symptoms) since [morning](duration).
+    - I'm [vomitting](symptoms) since [yesterday](duration).
     
 - lookup: symptoms
   examples: |

@@ -23,6 +23,7 @@ intents:
 - ask_form_questions
 - dont_know
 - discontinue
+- want_to_login_affirm
 - get_blood_pressure:
     use_entites:
       - blood_pressure
@@ -45,6 +46,8 @@ intents:
       - severity
 
 slots:
+  loggedin:
+    type: bool
   name:
     type: text
   number:
@@ -103,10 +106,15 @@ responses:
 
   ## Welcome responses
   utter_bot_info:
-  - text: "Hello, I'm a personalised HeathBot powered by Rasa. \n
-        How would you like to go ahead ? Want some more info or Would you like to register ?"
+  - text: "Hello, I'm a personalised HeathBot powered by Rasa. \nWant some more info? Would you like to register or login ?"
+  utter_login_email: 
+  - text: "Please enter you email address."
   utter_name:
   - text: "My name is health-Bot."
+  utter_wrong_email:
+    - text: "This email ID is not registered. Please try again."
+  utter_login_success:
+    - text: "Login successful. \nHow can I help you?"
 
   ## FAQ Responses
   utter_faq/bot_develop:
@@ -120,7 +128,7 @@ responses:
   utter_continue:
   - text: "Sorry, I don't quite understand. Do you want to continue?"
   utter_form_information:
-  - text: "These details are for storing your medical history. This will help us to know you in a better way. Please tell the required answer. These details will not be shared with anyone."
+  - text: "These details are for storing your medical history. This will help us to know you better. Please answer the required questions. These details will not be shared with anyone."
   utter_dont_know:
   - text: "If you dont know or dont remember please say normal or no, as asked. You can modify these details later."
   utter_ask_name:
@@ -250,7 +258,13 @@ forms:
         intent: affirm
         value: yes
 
+  login_form:
+    email:
+      - type: from_entity
+        entity: email
+
 actions:
   - action_submit
   - action_symptoms_form_submit
   - validate_symptoms_form
+  - action_login

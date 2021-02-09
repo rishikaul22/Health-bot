@@ -55,6 +55,17 @@ stories:
     - intent: affirm
   - action: utter_ask_more_info
 
+# - story: login_response
+#   steps:
+#   - checkpoint: check_asked_question
+#   - intent: want_to_login_affirm
+#   - action: utter_login_email
+#   - intent: tell_email
+#   - slot_was_set:
+#     - email:
+#   - action : action_login
+
+
 - story: trying_action_restart
   steps:
   - intent: ask_lower_stress
@@ -62,6 +73,7 @@ stories:
   - intent: ask_name
   - slot_was_set:
     - name:
+  - action: 
   - action: action_session_start
 
 # - story: taking_symptoms
