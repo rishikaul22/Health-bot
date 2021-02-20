@@ -3,6 +3,7 @@ import pymongo
 from flask_restful import Resource, Api
 import numpy as np
 from datetime import datetime
+from prediction import prediction
 
 ##################### Setting up flask app #####################
 app = Flask(__name__)
@@ -76,9 +77,20 @@ class UserLogin(Resource):
 
         return { "msg" : "User does not exist...!!!"}
 
+class Prediction(Resource):
+
+    def post(self):
+
+        data = request.get_json()
+        symptoms = data["symptoms"]
+
+        diseases = prediction(symptoms)
+        return diseases
+
 api = Api(app)
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')
+api.add_resource(Prediction, '/predict')
 
 # fever
 # headache
