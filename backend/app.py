@@ -83,8 +83,9 @@ class Prediction(Resource):
 
         data = request.get_json()
         symptoms = data["symptoms"]
-
-        diseases = prediction(symptoms)
+        email = data["email"]
+        user = UserTable.find_one({'email': email})
+        diseases = prediction(symptoms, user)
         return diseases
 
 api = Api(app)
