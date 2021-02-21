@@ -4,6 +4,17 @@ info = pd.read_csv('symptom_Description.csv')
 
 string = "please undergo {} after consulting your doctor"
 
+# all_symps = set()
+# for index, row in data.iterrows():
+#   symptoms = row['Symptoms'].lower()
+#   disease = row['Diseases']
+#   list_sym = symptoms.split(',')
+#   for sym in list_sym:
+#     all_symps.add(sym.strip(' .').lower())
+
+# for s in all_symps:
+#   print(" - " + s)
+
 symps = dict()
 diagnosis = dict()
 for index, row in data.iterrows():
@@ -12,6 +23,8 @@ for index, row in data.iterrows():
   list_sym = [symp.lower().strip(' ,.')  for symp in symptoms.split(',')]
   symps[disease] = list_sym
   diagnosis[disease] = string.format(row['Diagnosis'])
+
+# print(symps)
 
 def information(disease):
   desc = info[info['Disease']=='Arthritis']['Description']
@@ -38,28 +51,6 @@ def match(userSymptoms):
       matchPercent[disease] = (count/total)*100
   return matchPercent
   
-# symptoms = [
-#   {
-#     "symptom": "leg pain",
-#     "duration": "2 days",
-#   },
-#   {
-#     "symptom": "weakness",
-#     "duration": "1 day"
-#   },
-#   {
-#     "symptom": "cough",
-#     "duration": "2 days"
-#   },
-#   {
-#     "symptom": "chest pain",
-#     "duration": "1 days"
-#   },
-#   {
-#     "symptom": "headache",
-#     "duration": "1 days"
-#   }
-# ]
 
 def prediction(symptoms, user):
 
@@ -87,7 +78,29 @@ def prediction(symptoms, user):
     if processedSymptoms[0][0] == "cough":
       if user["frequent_cough"] == "yes":
             return {
-          "Normal Cough" : "Since you get cold very often, having frequent steam sessions and using nasal decongestants would help. "
+          "Normal Cough" : "Since you get cough very often, drinking boiled water and gargling with hot water would help. "
+        }
+      elif user["frequent_cough"] == "no" and processedSymptoms[0][1] <= 4:
+        return {
+          "Normal Cough" : "Try to drink boiled water and gargle with hot water for some relief. If it doesn't subside within 1-2 days, try contacting a doctor."
+        }
+      else:
+        return {
+          "Cough" : "Since you do not get cough very often and it has been more than 4 days, its preferrable to visit a doctor"
+        }
+    if processedSymptoms[0][0] == "fever":
+      if processedSymptoms[0][1] <= 2:
+        return {
+          "Fever" : "Having any paracetemol like crocin might give you instant relief. If it doesn't subside today, try contacting a doctor."
+        }
+      else:
+        return {
+          "Fever" : "Since you've had fever for more than 2 days, its preferrable to visit a doctor."
+        }
+    if processedSymptoms[0][0] == "headache":
+      if user["migraine"] == "yes":
+            return {
+          "Normal Headache" : "Since you have a past medical history with migraine, having frequent steam sessions and using nasal decongestants would help. "
         }
       elif user["frequent_cough"] == "no" and processedSymptoms[0][1] <= 4:
         return {
@@ -97,18 +110,27 @@ def prediction(symptoms, user):
         return {
           "Cough" : "Since you do not have cold very often and it has been more than 4 days, its preferrable to visit a doctor"
         }
-    if processedSymptoms[0][0] == "fever":
-      pass
-    if processedSymptoms[0][0] == "headache":
-      pass
-    if processedSymptoms[0][0] == "legpain":
-      pass
+    if processedSymptoms[0][0] == "legpain" or processedSymptoms[0][0] == "body pain" or processedSymptoms[0][0] == "bodypain" or processedSymptoms[0][0] == "leg pain":
+      return {
+        "Body Ache": "Having any paracetemol like crocin might give you instant relief. If it doesn't subside today, try contacting a doctor."
+      }
+      
 
   elif symptomLen == 2:
     pass
 
   elif symptomLen == 3:
-    pass
+    processedSymptoms.sort(key = lambda x: x[0])
+
+    if processedSymptoms[0][0] == "cold" and processedSymptoms[1][0] == "cough" and processedSymptoms[2][0] == "fever":
+      if processedSymptoms[2][1] <= 3:
+        return {
+          "Viral": "Since fever has been consistent for {} days, it seems to be viral. Contact your nearby doctor and medications and treatment.".format(processedSymptoms[2][1])
+        }
+      else:
+        return {
+          "Fever Profile" : "Since fever has been for more than 4 days it is advised to contact any nearby doctor and take prescription for fever profile blood test"
+        }
 
   print(processedSymptoms) 
   matches = match(processedSymptoms)
@@ -122,33 +144,9 @@ def prediction(symptoms, user):
     count += 1
     if count == 3:
         break
-  for k, v in result.items():
-    print(v)
+  # for k, v in result.items():
+    # print(v)
   return result
-
-## Ambigous Symptoms
-# Difficulty in breathing
-# muscle pain
-# stomach cramps
-# back pain
-# stomach pain
-# neck swelling
-# loss of appetite
-# muscle weakness
-# loss of balance
-# fast heart rate
-# facial pain
-# chest pain
-# unable to recognize common things
-# difficulty in concentration
-# difficulty in speaking
-# eye pain
-# joint pain
-# difficulty in moving joints
-# forgetfulness
-# inflammed eyes
-# poor concentration
-# irritability
 
 # Cold, Cough and Fever
 # if <= 3 days => viral
@@ -167,3 +165,26 @@ def prediction(symptoms, user):
 # if dry cold is yes, normal cold and give common medication
 # if frequent cold is no then <= 4 days normal medication
 # else > 4 days please visit your doctor
+
+# symptoms = [
+#   {
+#     "symptom": "leg pain",
+#     "duration": "2 days",
+#   },
+#   {
+#     "symptom": "weakness",
+#     "duration": "1 day"
+#   },
+#   {
+#     "symptom": "cough",
+#     "duration": "2 days"
+#   },
+#   {
+#     "symptom": "chest pain",
+#     "duration": "1 days"
+#   },
+#   {
+#     "symptom": "headache",
+#     "duration": "1 days"
+#   }
+# ]

@@ -158,7 +158,7 @@ responses:
   utter_ask_severity:
   - text: "What is the severity? Eg. mild, moderate or severe ?"
   utter_symptom_form_values:
-  - text: "Here is your symptom info : \nSymptom - {symptoms}\nDuration - {duration}\nSeverity - {severity}"
+  - text: "Here is your disease prognosis info : {symptoms}\n"
   utter_ask_more_symptoms:
   - text: "Do you have any more symptoms ?"
   
@@ -176,7 +176,7 @@ responses:
   utter_ask_want_more_info:
   - text: "Do you want more information about me ?"
   utter_ask_more_info:
-  - text: "What more information about me would you like to know?"
+  - text: "What more information would you like to know?"
 
 forms:
   profile_form:
@@ -247,9 +247,9 @@ forms:
     duration:
       - type: from_entity
         entity: duration
-    severity:
-      - type: from_entity
-        entity: severity
+    # severity:
+    #   - type: from_entity
+    #     entity: severity
     more_symptoms:
       - type: from_intent
         intent: deny

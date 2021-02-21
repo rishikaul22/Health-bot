@@ -81,12 +81,12 @@ class Prediction(Resource):
 
     def post(self):
 
-        data = request.get_json()
+        data = request.get_json() # 9221426611
         symptoms = data["symptoms"]
         email = data["email"]
         user = UserTable.find_one({'email': email})
         diseases = prediction(symptoms, user)
-        return diseases
+        return jsonify(diseases)
 
 api = Api(app)
 api.add_resource(UserRegister, '/register')

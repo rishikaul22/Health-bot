@@ -89,6 +89,14 @@ rules:
       - intent: want_to_login_affirm
       - action: login_form
       - active_loop: login_form
+
+  - rule: symptoms_form
+    steps:
+      - intent: take_symptoms
+      - action: symptoms_form
+      - active_loop: symptoms_form
+
+
 # - rule: registration_discontinue
 #   condition:
 #   # Condition that form is active.

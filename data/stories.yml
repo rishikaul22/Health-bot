@@ -66,23 +66,15 @@ stories:
 #   - action : action_login
 
 
-- story: trying_action_restart
-  steps:
-  - intent: ask_lower_stress
-  - action: utter_ask_name
-  - intent: ask_name
-  - slot_was_set:
-    - name:
-  - action: 
-  - action: action_session_start
-
-# - story: taking_symptoms
+# - story: trying_action_restart
 #   steps:
-#   - intent: take_symptoms
-#     entities:
-#     - symptoms
-#     - severity
-#     - duration
+#   - intent: ask_lower_stress
+#   - action: utter_ask_name
+#   - intent: ask_name
+#   - slot_was_set:
+#     - name:
+#   - action: 
+#   - action: action_session_start
 
 - story: taking_symptoms
   steps:
