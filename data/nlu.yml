@@ -425,9 +425,12 @@ nlu:
 - lookup: symptoms
   examples: |
     - cough
+    - nausea
     - breathing issues
     - breating problems
     - breathlessness
+    - shortness of breath
+    - 
     - hairloss
     - vomitting
     - stomachache

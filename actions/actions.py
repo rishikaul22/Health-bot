@@ -162,9 +162,7 @@ class ValidateRestaurantForm(FormValidationAction):
             "severity": tracker.get_slot("severity")
         }
 
-        s = dict()
-        s[index] = val
-        symps.append(s)
+        symps.append(val)
 
         if slot_value == "yes":
             return {
