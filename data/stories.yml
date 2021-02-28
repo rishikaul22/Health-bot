@@ -9,20 +9,24 @@ stories:
   - action: utter_bot_info
   - checkpoint: check_asked_question
 
-- story: happy_registration
-  steps:
-  - checkpoint: check_asked_question
-  - or:
-    - intent: want_to_register_affirm
-    - intent: affirm
-  - action: profile_form
-  - active_loop: profile_form
+# - story: happy_registration
+#   steps:
+#   - checkpoint: check_asked_question
+#   - or:
+#     - intent: want_to_register_affirm
+#     - intent: affirm
+#   - action: profile_form
+#   - active_loop: profile_form
 
 - story: happy_more_info
   steps:
   - checkpoint: check_asked_question
   - intent: want_info_affirm
   - action: utter_ask_more_info
+  # - intent: take_disease
+  # - slot_was_set:
+  #   - disease:
+
 
 - story: unhappy_more_info
   steps:
@@ -66,26 +70,39 @@ stories:
 #   - action : action_login
 
 
-- story: trying_action_restart
-  steps:
-  - intent: ask_lower_stress
-  - action: utter_ask_name
-  - intent: ask_name
-  - slot_was_set:
-    - name:
-  - action: 
-  - action: action_session_start
+# - story: trying_action_restart
+#   steps:
+#   - intent: ask_lower_stress
+#   - action: utter_ask_name
+#   - intent: ask_name
+#   - slot_was_set:
+#     - name:
+#   - action: 
+#   - action: action_session_start
 
 # - story: taking_symptoms
 #   steps:
 #   - intent: take_symptoms
-#     entities:
-#     - symptoms
-#     - severity
-#     - duration
-
-- story: taking_symptoms
-  steps:
-  - intent: take_symptoms
-  - action: symptoms_form
-  - active_loop: symptoms_form
+#   - action: symptoms_form
+#   - active_loop: symptoms_form
+# - story: interactive_story_1
+#   steps:
+#   - intent: greet
+#   - action: utter_name
+#   - action: utter_bot_info
+#   - intent: want_to_login_affirm
+#   - action: login_form
+#   - active_loop: login_form
+#   - slot_was_set:
+#     - requested_slot: email
+#   - slot_was_set:
+#     - email: khushi@gmail.com
+#   - slot_was_set:
+#     - email:
+#       - khushi@gmail.com
+#       - khushi@gmail.com
+#       - khushi@gmail.com
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: action_login

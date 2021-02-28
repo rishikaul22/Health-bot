@@ -8,14 +8,12 @@ nlu:
     - How is this helpful?
     - Who made you?
     - Are you free to use or cost something?
-
 - intent: faq/ask_weather
   examples: |
     - What's the weather like today?
     - Does it look sunny outside today?
     - Oh, do you mind checking the weather for me please?
     - I like sunny days in Berlin.
-
 - intent: faq/bot_challenge
   examples: |
     - Who are you?
@@ -23,7 +21,6 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
-
 - intent: greet
   examples: |
     - hey
@@ -40,7 +37,7 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
-
+    - hii
 - intent: goodbye
   examples: |
     - good afternoon
@@ -54,7 +51,6 @@ nlu:
     - see you around
     - bye bye
     - see you later
-
 - intent: thankyou
   examples: |
     - ok thanks a lot
@@ -62,7 +58,6 @@ nlu:
     - okay, thank you so much
     - thank you
     - thank you for talking with me
-
 - intent: affirm
   examples: |
     - yes
@@ -82,13 +77,12 @@ nlu:
     - you bet
     - I sure did
     - more or less
-
 - intent: deny
   examples: |
     - no
     - n
     - never
-    -n I don't think so
+    - n I don't think so
     - don't like that
     - no way
     - not really
@@ -100,7 +94,6 @@ nlu:
     - could have been better
     - not great
     - nope
-
 - intent: ask_lower_stress
   examples: |
     - What do I do if I'm too stressed?
@@ -109,7 +102,6 @@ nlu:
     - What are good ways to relax?
     - what are some things I can do to lower my stress?
     - i am very stressed, what do i do
-
 - intent: ask_healthy_diet
   examples: |
     - What's considered a healthy diet?
@@ -118,7 +110,6 @@ nlu:
     - What's an example of healthy diet?
     - How do I eat healthy?
     - what should i eat to make it a healthy diet?
-
 - intent: ask_exercise
   examples: |
     - What's a good amount of exercise for someone in thirties?
@@ -127,7 +118,6 @@ nlu:
     - Is walking once a day enough exercise?
     - How much exercise should I do every day?
     - How many times per week should I go to the gym
-
 - intent: out_of_scope
   examples: |
     - that's not what i want to do
@@ -147,7 +137,6 @@ nlu:
     - nevermind
     - I want to do something else
     - I changed my mind
-
 - intent: ask_name
   examples: |
     - my name is [Priyav Mehta](name)
@@ -174,7 +163,6 @@ nlu:
     - people call me [Shubham Shetty](name)
     - people call me [Ebrahim Hirani](name)
     - people call me [Karan Shah](name)
-
 - intent: tell_phone_number
   examples: |
     - My phone number is [8928691948](number)
@@ -207,8 +195,6 @@ nlu:
     - [9969782355](number)
     - [7996845527](number)
     - [9819367255](number)
-
-
 - intent: tell_email
   examples: |
     - My email id is [khushi12@spit.ac.in](email)
@@ -241,7 +227,7 @@ nlu:
     - [priyavmehta7@gmail.com](email)
     - [khushi1872jashnani@spit.ac.in](email)
     - [rishikaul@gmail.com](email)
-
+    - [khushi@gmail.com](email)
 - intent: low_value
   examples: |
     - low
@@ -252,7 +238,6 @@ nlu:
     - very less
     - decreased level
     - reduced
-
 - intent: normal_value
   examples: |
     - normal
@@ -260,7 +245,6 @@ nlu:
     - borderline
     - quite normal
     - its normal
-
 - intent: high_value
   examples: |
     - high
@@ -271,8 +255,6 @@ nlu:
     - high point
     - soared high
     - rose high
-
-
 - intent: get_blood_pressure
   examples: |
     - i have [low](blood_pressure) blood_pressure
@@ -281,7 +263,6 @@ nlu:
     - my blood_pressure is [low](blood_pressure)
     - my blood_pressure is [normal](blood_pressure)
     - my blood_pressure is [high](blood_pressure)
-
 - intent: get_diabetes
   examples: |
     - i have [no](diabetes) diabetes
@@ -290,7 +271,6 @@ nlu:
     - my diabetes is [no](diabetes)
     - my diabetes is [normal](diabetes)
     - my diabetes is [high](diabetes)
-
 - intent: want_to_register_affirm
   examples: |
     - Yes, i would like to register myself
@@ -305,7 +285,6 @@ nlu:
     - yeah, take my details
     - yes, i will give my details
     - Latter
-
 - intent: want_to_register_deny
   examples: |
     - no, i dont want to register myself
@@ -319,7 +298,6 @@ nlu:
     - no, i dont want to give my details
     - no i am not interested in registering here
     - not interested in giving details
-
 - intent: want_to_login_affirm
   examples: |
     - yes, i want to login
@@ -329,19 +307,18 @@ nlu:
     - log me in
     - login me
     - yes, i have my account
-
 - intent: want_info_affirm
   examples: |
     - Yes, I would like to get some information.
     - Information.
-    - info.
+    - Yes, some information first.
+    - info
     - Yes, info.
     - information first.
     - Yes, i would like to know about something first.
     - can you give some information first?.
     - former
     - Yes the former one.
-
 - intent: want_info_deny
   examples: |
     - No, i dont want any information.
@@ -353,7 +330,6 @@ nlu:
     - No information as such
     - No information as of now
     - No information right now
-
 - intent: ask_form_questions
   examples: |
     - Why do you want this?
@@ -379,7 +355,6 @@ nlu:
     - how will cold and cough help you?
     - how will cold help you?
     - how will cough help you?
-
 - intent: dont_know
   examples: |
     - i dont really know about this
@@ -398,7 +373,6 @@ nlu:
     - cant say
     - dont know
     - dont remember
-
 - intent: discontinue
   examples: |
     - please stop
@@ -413,70 +387,273 @@ nlu:
     - can u stop?
     - i want to stop
     - i dont want to go ahead
-
 - intent: take_symptoms
   examples: |
-    - having [light](severity) [fever](symptoms) since a [week](duration)
-    - a [high](severity) [cold](symptoms) past [4 days](duration).
+    - having [fever](symptoms) since [1 week](duration)
+    - feeling [cold](symptoms).
     - Experiencing [headache](symptoms) from [2 days](duration).
-    - I'm having a [difficulty in breathing](symptoms) since [morning](duration).
-    - I'm [vomitting](symptoms) since [yesterday](duration).
-    
-- lookup: symptoms
+    - I'm having a [difficulty in breathing](symptoms) since [3 weeks](duration).
+    - I'm [vomiting](symptoms) since [1 day](duration).
+    - I'm having [fever](symptoms).
+    - I feel like [vomiting](symptoms).
+    - I'm facing [neck pain](symptoms).
+- intent: take_disease
   examples: |
-    - cough
-    - nausea
-    - breathing issues
-    - breating problems
-    - breathlessness
-    - shortness of breath
-    - 
-    - hairloss
-    - vomitting
-    - stomachache
-    - dizziness
-
-- regex: number
-  examples: |
-    - \d{10}
-
+    - give me information about [Arthritis](disease)
+    - i want to know about [Arthritis](disease)
+    - what is [Arthritis](disease)
+    - give me information about [Mumps](disease)
+    - i want to know about [Mumps](disease)
+    - what is [Mumps](disease)
+    - give me information about [Sinusitis](disease)
+    - i want to know about [Sinusitis](disease)
+    - what is [Sinusitis](disease)
+    - give me information about [Alopecia](disease)
+    - i want to know about [Alopecia](disease)
+    - what is [Alopecia](disease)
+    - give me information about [Bubonic plague](disease)
+    - i want to know about [Bubonic plague](disease)
+    - what is [Bubonic plague](disease)
+    - give me information about [Cholera](disease)
+    - i want to know about [Cholera](disease)
+    - what is [Cholera](disease)
+    - give me information about [Dementia](disease)
+    - i want to know about [Dementia](disease)
+    - what is [Dementia](disease)
+    - give me information about [Dengue](disease)
+    - i want to know about [Dengue](disease)
+    - what is [Dengue](disease)
+    - give me information about [Diarrhoea](disease)
+    - i want to know about [Diarrhoea](disease)
+    - what is [Diarrhoea](disease)
+    - give me information about [Diphtheria](disease)
+    - i want to know about [Diphtheria](disease)
+    - what is [Diphtheria](disease)
+    - give me information about [Jaundice](disease)
+    - i want to know about [Jaundice](disease)
+    - what is [Jaundice](disease)
+    - give me information about [Glaucoma](disease)
+    - i want to know about [Glaucoma](disease)
+    - what is [Glaucoma](disease)
 - regex: email
   examples: |
     - ^[a-zA-Z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$
-
-# - lookup: duration
-#   examples: |
-#     - yesterday
-#     - afternoon
-#     - evening
-#     - 1 day
-#     - one day
-#     - two days
-#     - 3 days
-#     - 4 days
-#     - 5 days
-#     - 6 days
-#     - three days
-#     - four days
-#     - five days
-#     - six days
-#     - last week
-#     - 7 days
-#     - seven days
-#     - last month
-#     - 1 week
-#     - one week
-#     - two weeks
-#     - 2 weeks
-#     - 3 weeks
-#     - three weeks
-#     - 4 weeks
-#     - four weeks
-#     - 1 month
-#     - one month
-#     - 2 months
-#     - two months
-
+- regex: number
+  examples: |
+    - \d{10}
+- lookup: symptoms
+  examples: |
+    - pain in breast
+    - stomach pain
+    - stomach ache
+    - redness in eyes
+    - palpitations
+    - burning sensations
+    - burning sensation in joints
+    - burning sensation in big toe
+    - light coloured skin patches
+    - red coloured skin patches
+    - fast heart rate
+    - muscle weakness
+    - chest pain
+    - frequent urination
+    - hyperactivity
+    - loss of balance
+    - trouble in reading
+    - difficulty in reading
+    - delayed growth
+    - poor wound healing
+    - neck swelling
+    - pain in breathing
+    - dark urine
+    - dehydration
+    - fainted
+    - fainting
+    - unable to recognize common things
+    - poor concentration
+    - numbness in hands
+    - numbness in feet
+    - weakness in hands
+    - weakness in feet
+    - swollen lymph nodes
+    - nausea
+    - cough
+    - a swollen stomach
+    - dark coloured urine
+    - dark coloured stool
+    - unable to understand conversations
+    - fluid discharge
+    - blood discharge
+    - failure to thrive
+    - memory loss
+    - confusion
+    - scaly skin
+    - scaly areas
+    - trouble in spelling
+    - difficulty in concentration
+    - poor conentration
+    - coughing
+    - constipation
+    - diarrhoea
+    - swelling of nose
+    - painless ulcers on the soles of feet
+    - itchy skin
+    - hair loss
+    - weak bones
+    - memory loss
+    - painful urination
+    - difficulty in speaking
+    - muscle cramps
+    - slow movement
+    - eye pain with nausea
+    - chills
+    - shivering
+    - jumbled speech
+    - depression
+    - loss of height
+    - skin infection
+    - frequent infection
+    - inflamed eyes
+    - stress
+    - forgetfulness
+    - cough with phlegm
+    - pus
+    - wheezing
+    - food intolerance
+    - stiffness
+    - sweating
+    - back pain
+    - headache
+    - nasal congestion
+    - difficulty in moving joints
+    - irritability
+    - tremors
+    - red rings or red ring
+    - confused
+    - itching
+    - vision loss
+    - swelling in breast
+    - blood in stools
+    - green pus discharge from the vagina or penis
+    - hunger or hungry
+    - yellowing of eyes or yellow eyes
+    - brittle nails
+    - abnormal discharge
+    - change in skin colour
+    - dark coloured urine
+    - a red skin rash
+    - dry cough
+    - tiredness
+    - dizziness
+    - low mood
+    - depression
+    - redness in nipples
+    - redness in breast
+    - loss of taste
+    - loss of smell
+    - loss of eyebrows
+    - eyelashes
+    - fatigue
+    - stomach cramps
+    - flu like symptoms
+    - anxiety
+    - trembling
+    - bloated stomach
+    - bloating
+    - inability to express
+    - restlessness
+    - blurred vision
+    - development delays
+    - yellowing of the eyes
+    - yellowing of skin
+    - weakness
+    - bone fracture
+    - heavier periods
+    - spotting
+    - runny nose
+    - vomiting
+    - night sweats
+    - swelling
+    - fatigue
+    - constipation
+    - numbness
+    - muscle pain
+    - cramping
+    - reduced range of motion
+    - neurological changes
+    - increased thirst
+    - rash with small red dots/skin rashes
+    - sore throat
+    - bloody discharge from the nipples
+    - blood from nipples
+    - body pain
+    - back pain
+    - swelling in joints
+    - soar eyes
+    - limited thinking abilities
+    - sleep disorder
+    - lump in breast
+    - difficulty in swallowing
+    - soreness
+    - facial pain
+    - loose watery stools
+    - loose motions
+    - weight loss
+    - fever
+    - difficulty in breathing
+    - mood swings
+    - muscle tightness
+    - grey nails
+    - cramps
+    - rash
+    - ulcers
+    - distorted vision
+    - limited social skills
+    - difficulty in socializing
+    - cold
+    - joint pain
+    - loss of appetite
+    - painless swelling
+    - lumps on the face
+    - lumps on earlobes
+    - muscle spasms
+    - less body stability
+    - high heart rate
+    - high heart beat
+    - pain in face
+    - uneasy in the chest
+    - unable to speak properly
+    - unable to speak well
+    - unable to speak normally
+    - pain in muscles
+    - cramps in stomach
+    - pain in back
+    - pain in stomach
+    - swelling in neck
+    - loss in appetite
+    - appetite loss
+    - breathlessness
+    - unable to breathe
+    - difficult to breathe
+    - breathing issues
+    - breathing problems
+    - not able to breathe
+    - pain in the eye
+    - eyes paining
+    - pain in my joints
+    - joints are paining
+    - not able to move my joints
+    - unable to remember
+    - forgetting often
+    - heavy eyes
+    - swollen eyes
+    - inflammation of eyes
+    - unable to concentrate
+    - unable to focus
+    - irritated
+    - neck is swollen
+    - legpain
+    - leg pain
 - lookup: severity
   examples: |
     - severe
@@ -485,4 +662,3 @@ nlu:
     - slight
     - a bit high
     - a bit light
-    

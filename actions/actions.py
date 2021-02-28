@@ -16,23 +16,58 @@ from rasa_sdk.events import SlotSet, EventType
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormValidationAction
 import webbrowser
+from backend.prediction import get_info
+from backend.unique_symptoms import unique
+
+def removeAmbiguousSymptom(symptom):
+
+    print(symptom)
+
+    if symptom == 'pain in muscles':
+        symptom = 'muscle pain'
+    elif symptom == 'cramps in stomach':
+        symptom = 'stomach cramps'
+    elif symptom == 'pain in back':
+        symptom = 'back pain'
+    elif symptom == 'pain in stomach':
+        symptom = 'stomach pain'
+    elif symptom == 'swelling in neck' or symptom == 'neck is swollen':
+        symptom = 'neck swelling'
+    elif symptom == 'loss in appetite' or symptom == 'appetite loss':
+        symptom = 'loss of appetite'
+    elif symptom == 'breathlessness' or symptom == 'unable to breathe' or symptom == 'not able to breathe' or symptom == 'difficult to breathe' or symptom == 'breathing issues' or symptom == 'breathing problems':
+        symptom = 'difficulty in breathing'
+    elif symptom == 'muscle spasms':
+        symptom = 'muscle weakness'
+    elif symptom == 'less body stability':
+        symptom = 'loss of balance'
+    elif symptom == 'high heart rate' or symptom == 'high heart beat':
+        symptom = 'fast heart rate'
+    elif symptom == 'uneasy in the chest':
+        symptom = 'chest pain'
+    elif symptom == 'pain in face':
+        symptom = 'facial pain'
+    elif symptom == 'unable to speak properly' or symptom == 'unable to speak well' or symptom == 'unable to speak normally':
+        symptom = 'difficulty in speaking'
+    elif symptom == 'pain in the eye' or symptom == 'eyes paining':
+        symptom = 'eye pain'
+    elif symptom == 'pain in my joints' or symptom == 'joints are paining' or symptom == 'not able to move my joints':
+        symptom = 'joint pain'
+    elif  symptom == 'unable to remember' or symptom == 'forgetting often':
+        symptom = 'forgetfulness'
+    elif symptom == 'heavy eyes' or symptom == 'swollen eyes' or symptom == 'inflammation of eyes':
+        symptom = 'inflammed eyes'
+    elif symptom == 'unable to concentrate' or symptom == 'unable to focus' or symptom == 'difficulty in concentration':
+        symptom = 'poor concentration'
+    elif symptom == 'irritated':
+        symptom = 'irritability'
+
+    print(symptom)
+    return symptom
 
 class UserForm(Action):
     def name(self):
         return "profile_form"
-
-    # def run(
-    #     self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict
-    # ):
-    #     required_slots = ["name", "number", ]
-
-    #     for slot_name in required_slots:
-    #         if tracker.slots.get(slot_name) is None:
-    #             # The slot is not filled yet. Request the user to fill this slot next.
-    #             return [SlotSet("requested_slot", slot_name)]
-
-    #     # All slots are filled.
-    #     return [SlotSet("requested_slot", None)]
 
 def create_user(name, email, number, diabetes, blood_pressure, frequent_cold, frequent_cough, migraine):
     request_url = "http://127.0.0.1:5000/register"
@@ -69,6 +104,35 @@ def create_user(name, email, number, diabetes, blood_pressure, frequent_cold, fr
     
     return response
 
+def predict(symptoms, email):
+    request_url = "http://127.0.0.1:5000/predict"
+
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+        # "Authorization": f"Bearer {airtable_api_key}",
+    }
+    print(headers) 
+    data = {
+        "email" : email,
+        "symptoms" : symptoms
+    }
+    print(data)
+    
+    try:
+        print("Sending request")
+        response = requests.post(
+            request_url, headers=headers, data=json.dumps(data)
+        )
+        print("Request sent")
+        response.raise_for_status()
+        print(response.status_code)
+    except requests.exceptions.HTTPError as err:
+        raise SystemExit(err)
+    
+    return response
+
+
 class ActionSubmit(Action):
     def name(self):
         return "action_submit"
@@ -90,19 +154,25 @@ class ActionSubmit(Action):
             name = ' '.join(name)
             name = name.title()
 
+        if type(number) == list:
+            number = number[0]
+
+        if type(email) == list:
+            email = email[0]
+
         print("Calling function")
         print(name)
-        # resp = create_user(
-        #     name=name,
-        #     email=email,
-        #     number=number,
-        #     diabetes=diabetes,
-        #     blood_pressure=blood_pressure,
-        #     frequent_cold=frequent_cold,
-        #     frequent_cough=frequent_cough,
-        #     migraine=migraine
-        # )
-        # print(resp)
+        resp = create_user(
+            name=name,
+            email=email,
+            number=number,
+            diabetes=diabetes,
+            blood_pressure=blood_pressure,
+            frequent_cold=frequent_cold,
+            frequent_cough=frequent_cough,
+            migraine=migraine
+        )
+        print(resp)
         dispatcher.utter_message(template="utter_form_values",
                                  name=name,
                                  number=number,
@@ -126,17 +196,16 @@ class SymptomsFormSubmit(Action):
 
     def run(self, dispatcher, tracker: Tracker, domain: "DomainDict"):
     
-        symptoms = tracker.get_slot('symptoms')
-        duration = tracker.get_slot('duration')
-        severity = tracker.get_slot('severity')
-
+        allsymptoms = tracker.get_slot('all_symptoms')
+        email = tracker.get_slot('email')
+        if type(email) == list:
+            email = email[0]
+        resp = predict(allsymptoms, email)
+        print(resp.json())
         dispatcher.utter_message(template="utter_symptom_form_values",
-                                 symptoms=symptoms,
-                                 duration=duration,
-                                 severity=severity
-                                )
+                                 symptoms=resp.json())
 
-class ValidateRestaurantForm(FormValidationAction):
+class ValidateSymptomsForm(FormValidationAction):
     def name(self):
         return "validate_symptoms_form"
     
@@ -159,7 +228,7 @@ class ValidateRestaurantForm(FormValidationAction):
         val = {
             "symptom": tracker.get_slot('symptoms'),
             "duration": tracker.get_slot('duration'),
-            "severity": tracker.get_slot("severity")
+            #"severity": tracker.get_slot("severity")
         }
 
         symps.append(val)
@@ -169,24 +238,144 @@ class ValidateRestaurantForm(FormValidationAction):
                 "symptoms": None,
                 "more_symptoms": None,
                 "duration": None,
-                "severity": None,
+                #"severity": None,
                 "all_symptoms": symps
             }
         else:
             print("IN NO")
             return {"more_symptoms": slot_value, "all_symptoms": symps}
 
+    def validate_symptoms(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: "DomainDict",
+    ):
+        symptom = tracker.get_slot('symptoms')
+        print(symptom)
+        if type(symptom) == list:
+            all_symps = set(symptom)
+            symptom = list(all_symps)
+            print(symptom)
+
+            if symptom[0] not in unique:
+                print("IN HERE")
+                print(symptom[0])
+                symptom = removeAmbiguousSymptom(symptom[0])
+                print(symptom)
+            else:
+                print("IN THIS")
+                symptom = symptom[0]
+        
+        else:
+            if symptom not in unique:
+                print("IN HERE")
+                symptom = removeAmbiguousSymptom(symptom)
+
+        return {"symptoms" : symptom}
+
+    def validate_duration(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: "DomainDict",
+    ):
+        duration = tracker.get_slot('duration')
+        days = 0
+
+        temp = ''
+        if type(duration) == list:
+            duration = set(duration)
+            if len(duration) == 1:
+                duration = duration.pop()
+            else:
+                duration = list(duration)
+                if duration[0] == "weeks" or duration[0] == "week" or duration[0] == "days" or duration[0] == "day":
+                    temp = duration[1]+ duration[0]
+                else:
+                    temp = duration[0]+ duration[1]
+                duration = temp
+        
+        if "weeks" in duration:
+            index = duration.find("weeks")
+            duration = duration[0:index].strip(" .,")
+            duration = int(duration)
+            days = 7 * duration
+        elif "week" in duration:
+            days = 7
+        elif "days" in duration:
+            index = duration.find("days")
+            duration = duration[0:index].strip(" .,")
+            days = int(duration)
+        else:
+            days = 1
+
+        return {"duration": days}
+    
 class Login(Action):
     def name(self):
         return "action_login"
     
     def run(self, dispatcher, tracker: Tracker, domain: "DomainDict"):
         
-        email_id = "khushi@gmail.com"
-        if tracker.get_slot('email') == email_id:
-            print("IN LOGIN SUCCESS")
-            SlotSet('loggedin', True)
-            dispatcher.utter_message(template="utter_login_success")
-        else:
-            print("IN LOGIN FAILURE")
-            dispatcher.utter_message(template="utter_wrong_email")
+        email_id = "priyav.mehta@spit.ac.in"
+        email = tracker.get_slot('email')
+        if type(email) == list:
+            email = email[0]
+        request_url = "http://127.0.0.1:5000/login"
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+        data = {
+            "email" : email,
+        }
+        print(data)
+        
+        try:
+            print("Sending request")
+            response = requests.post(
+                request_url, headers=headers, data=json.dumps(data)
+            )
+            print("Request sent")
+            response.raise_for_status()
+            print(response.status_code)
+            res = response.json()
+            if "success" in res['msg'].lower():
+                print("IN LOGIN SUCCESS")
+                dispatcher.utter_message(template="utter_login_success")
+                return [
+                    SlotSet('loggedin', True),
+                    SlotSet('name', res['user']['name']),
+                    SlotSet('diabetes', res['user']['diabetes']),
+                    SlotSet('blood_pressure', res['user']['blood_pressure']),
+                    SlotSet('migraine', res['user']['migraine']),
+                    SlotSet('frequent_cold', res['user']['frequent_cold']),
+                    SlotSet('frequent_cough', res['user']['frequent_cough']),
+                    SlotSet('number', res['user']['number']),
+                ]
+            else:
+                print("IN LOGIN FAILURE")
+                dispatcher.utter_message(template="utter_wrong_email")
+                return [
+                    SlotSet('loggedin', False),
+                ]
+        except requests.exceptions.HTTPError as err:
+            raise SystemExit(err)
+        dispatcher.utter_message(template="utter_wrong_email")
+        return [SlotSet('loggedin', False)]
+
+class Information(Action):
+    def name(self):
+        return "action_info"
+
+    def run(self, dispatcher, tracker: Tracker, domain: "DomainDict"):
+        disease = tracker.get_slot('disease')
+        info = get_info(disease)
+        print(info)
+        # print(type(info))/
+        dispatcher.utter_message(template = "utter_disease_info",desc = info)
+        
+

@@ -4,6 +4,7 @@ from flask_restful import Resource, Api
 import numpy as np
 from datetime import datetime
 from prediction import prediction
+import pandas as pd
 
 ##################### Setting up flask app #####################
 app = Flask(__name__)
@@ -51,29 +52,23 @@ class UserLogin(Resource):
 
         data = request.get_json()
         email = data['email']
-        password = data['password']
 
         user = UserTable.find_one({'email': email})
 
         if user:
+            userDetails = {
+                "name" : user["name"],
+                "password": user["password"],
+                "number" : user["number"],
+                "email" : user["email"],
+                "diabetes" :user["diabetes"],
+                "blood_pressure" : user["blood_pressure"],
+                "frequent_cold" : user["frequent_cold"],
+                "frequent_cough" : user["frequent_cough"],
+                "migraine" : user["migraine"]
+            }
 
-            if password == user['password']:
-
-                userDetails = {
-                    "name" : user["name"],
-                    "password": user["password"],
-                    "number" : user["number"],
-                    "email" : user["email"],
-                    "diabetes" :user["diabetes"],
-                    "blood_pressure" : user["blood_pressure"],
-                    "frequent_cold" : user["frequent_cold"],
-                    "frequent_cough" : user["frequent_cough"],
-                    "migraine" : user["migraine"]
-                }
-                
-                return { "msg" : "Login successful", 'user': userDetails }
-
-            return { "msg" : "Invalid Credentials" }
+            return { "msg" : "Login successful", 'user': userDetails }
 
         return { "msg" : "User does not exist...!!!"}
 
@@ -81,12 +76,13 @@ class Prediction(Resource):
 
     def post(self):
 
-        data = request.get_json()
+        data = request.get_json() # 9221426611
         symptoms = data["symptoms"]
         email = data["email"]
         user = UserTable.find_one({'email': email})
         diseases = prediction(symptoms, user)
-        return diseases
+        return jsonify(diseases)
+
 
 api = Api(app)
 api.add_resource(UserRegister, '/register')

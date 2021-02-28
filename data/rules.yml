@@ -12,11 +12,11 @@ rules:
       - action: utter_faq
     wait_for_user_input: false
 
-  # - rule: Activate form
-  #   steps:
-  #   - intent: want_to_register_affirm
-  #   - action: profile_form
-  #   - active_loop: profile_form
+  - rule: Activate form
+    steps:
+    - intent: want_to_register_affirm
+    - action: profile_form
+    - active_loop: profile_form
 
   - rule: faq_between_forms
     condition:
@@ -61,7 +61,7 @@ rules:
           - requested_slot: null
       # The actions we want to run when the form is submitted.
       - action: action_submit
-      - action: utter_form_values
+      # - action: utter_form_values
 
   - rule: Submit_Symptoms_form
     condition:
@@ -89,6 +89,19 @@ rules:
       - intent: want_to_login_affirm
       - action: login_form
       - active_loop: login_form
+
+  - rule: symptoms_form
+    steps:
+      - intent: take_symptoms
+      - action: symptoms_form
+      - active_loop: symptoms_form
+      
+  - rule: disease_info
+    steps:
+     - intent: take_disease
+     - action: action_info
+
+
 # - rule: registration_discontinue
 #   condition:
 #   # Condition that form is active.
