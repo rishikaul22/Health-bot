@@ -19,8 +19,9 @@ nlu:
     - Who are you?
     - are you a bot?
     - are you a human?
-    - am I talking to a bot?
+    - am I talking to a bot?-
     - am I talking to a human?
+    - How can you help me?
 - intent: greet
   examples: |
     - hey
@@ -38,6 +39,8 @@ nlu:
     - goodevening
     - good afternoon
     - hii
+# - intent: water_reminder
+
 - intent: goodbye
   examples: |
     - good afternoon
@@ -654,6 +657,8 @@ nlu:
     - neck is swollen
     - legpain
     - leg pain
+
+    
 - lookup: severity
   examples: |
     - severe

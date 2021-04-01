@@ -5,8 +5,10 @@ stories:
 - story: welcome
   steps:
   - intent: greet
+  - action: action_set_reminder
   - action: utter_name
   - action: utter_bot_info
+  # - action: action_set_reminder
   - checkpoint: check_asked_question
 
 # - story: happy_registration

@@ -101,6 +101,31 @@ rules:
      - intent: take_disease
      - action: action_info
 
+  - rule: prognosis_disease_info
+    steps:
+     - intent: prognosis_disease
+     - action: action_prog_disease_info
+  
+  # - rule: set reminder
+  #   steps:
+  #   - intent: water_reminder
+  #   - action: action_water_reminder
+
+  - rule: react to water reminder
+    steps:
+    - intent: water_reminder
+    - action: action_water_reminder
+    
+  - rule: react to disease reminder
+    steps:
+    - intent: acc_disease
+    - action: action_acc_disease_reminder
+
+  - rule: react to disease info reminder
+    steps:
+    - intent: disease_info_reminder
+    - action: action_disease_info_reminder
+
 
 # - rule: registration_discontinue
 #   condition:

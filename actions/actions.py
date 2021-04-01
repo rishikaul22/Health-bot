@@ -4,7 +4,6 @@
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
 
-
 # This is a simple example for a custom action which utters "Hello World!"
 
 from typing import Any, Text, Dict, List
@@ -16,122 +15,62 @@ from rasa_sdk.events import SlotSet, EventType
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormValidationAction
 import webbrowser
-from backend.prediction import get_info
+from backend.prediction import get_info, get_preventive_measures, get_home_remedies, get_diet
 from backend.unique_symptoms import unique
+import datetime
+from rasa_sdk.events import ReminderScheduled
+from rasa_sdk import Action
 
-def removeAmbiguousSymptom(symptom):
+from actions.helper import removeAmbiguousSymptom, create_user, predict, get_diseases, stored_prognosed_disease, get_duration
 
-    print(symptom)
+class ActionSetReminder(Action):
+    """Schedules a reminder, supplied with the last message's entities."""
 
-    if symptom == 'pain in muscles':
-        symptom = 'muscle pain'
-    elif symptom == 'cramps in stomach':
-        symptom = 'stomach cramps'
-    elif symptom == 'pain in back':
-        symptom = 'back pain'
-    elif symptom == 'pain in stomach':
-        symptom = 'stomach pain'
-    elif symptom == 'swelling in neck' or symptom == 'neck is swollen':
-        symptom = 'neck swelling'
-    elif symptom == 'loss in appetite' or symptom == 'appetite loss':
-        symptom = 'loss of appetite'
-    elif symptom == 'breathlessness' or symptom == 'unable to breathe' or symptom == 'not able to breathe' or symptom == 'difficult to breathe' or symptom == 'breathing issues' or symptom == 'breathing problems':
-        symptom = 'difficulty in breathing'
-    elif symptom == 'muscle spasms':
-        symptom = 'muscle weakness'
-    elif symptom == 'less body stability':
-        symptom = 'loss of balance'
-    elif symptom == 'high heart rate' or symptom == 'high heart beat':
-        symptom = 'fast heart rate'
-    elif symptom == 'uneasy in the chest':
-        symptom = 'chest pain'
-    elif symptom == 'pain in face':
-        symptom = 'facial pain'
-    elif symptom == 'unable to speak properly' or symptom == 'unable to speak well' or symptom == 'unable to speak normally':
-        symptom = 'difficulty in speaking'
-    elif symptom == 'pain in the eye' or symptom == 'eyes paining':
-        symptom = 'eye pain'
-    elif symptom == 'pain in my joints' or symptom == 'joints are paining' or symptom == 'not able to move my joints':
-        symptom = 'joint pain'
-    elif  symptom == 'unable to remember' or symptom == 'forgetting often':
-        symptom = 'forgetfulness'
-    elif symptom == 'heavy eyes' or symptom == 'swollen eyes' or symptom == 'inflammation of eyes':
-        symptom = 'inflammed eyes'
-    elif symptom == 'unable to concentrate' or symptom == 'unable to focus' or symptom == 'difficulty in concentration':
-        symptom = 'poor concentration'
-    elif symptom == 'irritated':
-        symptom = 'irritability'
+    def name(self) -> Text:
+        return "action_set_reminder"
 
-    print(symptom)
-    return symptom
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        # dispatcher.utter_message("I will remind you in 10 seconds.")
+
+        date = datetime.datetime.now() + datetime.timedelta(hours=1)
+        entities = tracker.latest_message.get("entities")
+
+        reminder = ReminderScheduled(
+            "water_reminder",
+            trigger_date_time=date,
+            entities=entities,
+            name="water_reminder",
+            kill_on_user_message=False,
+        )
+        print("Reminder scheduled.")
+        return [reminder]
+
+class ActionBookingReminder(Action):
+    def name(self):
+        return "action_water_reminder"
+
+    def run(self, dispatcher, tracker, domain):
+        print("Reminder called.")
+        dispatcher.utter_message("Please have a glass of water.")
+        date = datetime.datetime.now() + datetime.timedelta(hours=2)
+        entities = tracker.latest_message.get("entities")
+        return [ReminderScheduled(
+                "water_reminder",
+                trigger_date_time=date,
+                entities=entities,
+                name="water_reminder",
+                kill_on_user_message=False,
+            )]
 
 class UserForm(Action):
     def name(self):
         return "profile_form"
-
-def create_user(name, email, number, diabetes, blood_pressure, frequent_cold, frequent_cough, migraine):
-    request_url = "http://127.0.0.1:5000/register"
-
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-        # "Authorization": f"Bearer {airtable_api_key}",
-    }
-    print(headers) 
-    data = {
-        "name" : name,
-        "password": "12345678",
-        "number" : number,
-        "email" : email,
-        "diabetes" : diabetes,
-        "blood_pressure" : blood_pressure,
-        "frequent_cold" : frequent_cold,
-        "frequent_cough" : frequent_cough,
-        "migraine" : migraine
-    }
-    print(data)
-    
-    try:
-        print("Sending request")
-        response = requests.post(
-            request_url, headers=headers, data=json.dumps(data)
-        )
-        print("Request sent")
-        response.raise_for_status()
-        print(response.status_code)
-    except requests.exceptions.HTTPError as err:
-        raise SystemExit(err)
-    
-    return response
-
-def predict(symptoms, email):
-    request_url = "http://127.0.0.1:5000/predict"
-
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-        # "Authorization": f"Bearer {airtable_api_key}",
-    }
-    print(headers) 
-    data = {
-        "email" : email,
-        "symptoms" : symptoms
-    }
-    print(data)
-    
-    try:
-        print("Sending request")
-        response = requests.post(
-            request_url, headers=headers, data=json.dumps(data)
-        )
-        print("Request sent")
-        response.raise_for_status()
-        print(response.status_code)
-    except requests.exceptions.HTTPError as err:
-        raise SystemExit(err)
-    
-    return response
-
 
 class ActionSubmit(Action):
     def name(self):
@@ -184,6 +123,29 @@ class ActionSubmit(Action):
                                  migraine = migraine
                                 )
 
+class ActionAccurateDiseaseReminder(Action):
+    def name(self):
+        return "action_acc_disease_reminder"
+
+    def run(self, dispatcher, tracker, domain):
+        print("disease reminder called.")
+        diseases = get_diseases(tracker.get_slot('email'))
+        print(diseases['prognosis'])
+        buts = list()
+        for d in diseases['prognosis']:
+            d = d.lower()
+            btn = {
+                "payload": '/prognosis_disease{"disease":"'+d+'"}',
+                 "title": d
+            }
+            buts.append(btn)
+        dispatcher.utter_message(text = "Which disease are you actually suffering from after diagnosis ?", buttons = buts
+        # [
+        #         {"payload": '/take_disease{"disease": "fever"}', "title": "Fever"},
+        #         {"payload": '/take_disease{"disease": "cough"}', "title": "Cough"},
+        #     ]
+        )
+
 class SymptomsForm(Action):
 
     def name(self):
@@ -204,6 +166,19 @@ class SymptomsFormSubmit(Action):
         print(resp.json())
         dispatcher.utter_message(template="utter_symptom_form_values",
                                  symptoms=resp.json())
+        date = datetime.datetime.now() + datetime.timedelta(seconds=15)
+        entities = tracker.latest_message.get("entities")
+       
+
+        reminder = ReminderScheduled(
+            "acc_disease",
+            trigger_date_time=date,
+            entities=entities,
+            name="acc_disease_reminder",
+            kill_on_user_message=False,
+        )
+        print("disease reminder scheduled.")
+        return [reminder]
 
 class ValidateSymptomsForm(FormValidationAction):
     def name(self):
@@ -228,7 +203,6 @@ class ValidateSymptomsForm(FormValidationAction):
         val = {
             "symptom": tracker.get_slot('symptoms'),
             "duration": tracker.get_slot('duration'),
-            #"severity": tracker.get_slot("severity")
         }
 
         symps.append(val)
@@ -238,12 +212,11 @@ class ValidateSymptomsForm(FormValidationAction):
                 "symptoms": None,
                 "more_symptoms": None,
                 "duration": None,
-                #"severity": None,
                 "all_symptoms": symps
             }
         else:
             print("IN NO")
-            return {"more_symptoms": slot_value, "all_symptoms": symps}
+            return {"more_symptoms": "yes", "all_symptoms": symps}
 
     def validate_symptoms(
         self,
@@ -367,6 +340,71 @@ class Login(Action):
         dispatcher.utter_message(template="utter_wrong_email")
         return [SlotSet('loggedin', False)]
 
+class ActionDiseaseInfoReminder(Action):
+    def name(self):
+        return "action_disease_info_reminder"
+
+    def run(self, dispatcher, tracker, domain):
+        
+        duration = get_duration(tracker.get_slot('email'))
+        print(duration)
+        print(type(duration))
+        if duration['duration'] != 0:
+            disease = duration['disease']
+            info = ""
+
+            if duration['duration'] % 3 == 0:
+                info = get_diet(disease)
+
+            elif duration['duration'] % 3 == 1:
+                info = get_home_remedies(disease)
+
+            else:
+                info = get_preventive_measures(disease)
+
+            print(info)
+
+            date = datetime.datetime.now() + datetime.timedelta(seconds=10)
+            entities = tracker.latest_message.get("entities")
+            dispatcher.utter_message(text = info)
+            return [ReminderScheduled(
+                "disease_info_reminder",
+                trigger_date_time=date,
+                entities=entities,
+                name="disease_info_reminder_daily",
+                kill_on_user_message=False,
+            )]
+        else:
+            return []
+
+class PrognosisDiseaseInfo(Action):
+    def name(self):
+        return "action_prog_disease_info"
+
+    def run(self, dispatcher, tracker: Tracker, domain: "DomainDict"):
+        disease = tracker.get_slot('disease')
+        email = tracker.get_slot('email')
+        if type(email) == list:
+            email = email[0]
+        msg = stored_prognosed_disease(email, disease)
+        print(msg)
+        info = get_info(disease)
+        print(info)
+
+        date = datetime.datetime.now() + datetime.timedelta(seconds=10)
+        entities = tracker.latest_message.get("entities")
+
+        reminder = ReminderScheduled(
+            "disease_info_reminder",
+            trigger_date_time=date,
+            entities=entities,
+            name="disease_info_reminder_daily",
+            kill_on_user_message=False,
+        )
+        
+        dispatcher.utter_message(template = "utter_disease_info",desc = info)
+        return [reminder]
+
 class Information(Action):
     def name(self):
         return "action_info"
@@ -378,4 +416,3 @@ class Information(Action):
         # print(type(info))/
         dispatcher.utter_message(template = "utter_disease_info",desc = info)
         
-

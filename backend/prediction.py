@@ -1,8 +1,8 @@
 import pandas as pd
 import wikipedia
 
-data = pd.read_csv(r'C:\\Users\\Khushi\\Desktop\\Rasa\\HealthBot\\backend\\Disease_Sheet.csv',encoding='utf-8')
-info = pd.read_csv(r'C:\\Users\\Khushi\\Desktop\\Rasa\\HealthBot\\backend\\symptom_Description.csv')
+data = pd.read_csv(r'C:\\Users\\Khushi\\Desktop\\Frameworks\\Rasa\\HealthBot\\backend\\Disease_Sheet.csv',encoding='utf-8')
+info = pd.read_csv(r'C:\\Users\\Khushi\\Desktop\\Frameworks\\Rasa\\HealthBot\\backend\\symptom_Description.csv')
 
 string = "please undergo {} after consulting your doctor"
 
@@ -27,6 +27,36 @@ for index, row in data.iterrows():
   diagnosis[disease] = string.format(row['Diagnosis'])
 
 # print(symps)
+
+def get_preventive_measures(disease):
+  desc = ""
+  for index, row in data.iterrows():
+    if row['Diseases'].lower() == disease.lower():
+      desc = "Preventive Measures for {} : \n".format(disease.title()) + row['Prevention']
+
+      if desc == "Nothing" or len(desc) == 0 or len(desc) == 1:
+        desc = get_diet(disease)
+  return desc
+
+def get_home_remedies(disease):
+  desc = ""
+  for index, row in data.iterrows():
+    if row['Diseases'].lower() == disease.lower():
+      desc = "Home Remedies for {} : \n".format(disease.title()) + row['Home-Remedies']
+
+      if desc == "Nothing" or len(desc) == 0 or len(desc) == 1:
+        desc = get_diet(disease)
+
+        
+  return desc
+
+def get_diet(disease):
+  desc = ""
+  for index, row in data.iterrows():
+    if row['Diseases'].lower() == disease.lower():
+      print("HELLO")
+      desc = "Diet Tips for {} : \n".format(disease.title()) + row['Diet']
+  return desc
 
 def get_info(disease):
   information = ""
@@ -57,7 +87,6 @@ def get_info(disease):
       
   information = wikipedia.summary(disease)
 
-  # preevention = 
   return information
 
 def preprocessing(symptomsList):
@@ -80,7 +109,6 @@ def match(userSymptoms):
     if count > 0:
       matchPercent[disease] = (count/total)*100
   return matchPercent
-  
 
 def prediction(symptoms, user):
 
@@ -195,26 +223,3 @@ def prediction(symptoms, user):
 # if dry cold is yes, normal cold and give common medication
 # if frequent cold is no then <= 4 days normal medication
 # else > 4 days please visit your doctor
-
-# symptoms = [
-#   {
-#     "symptom": "leg pain",
-#     "duration": "2 days",
-#   },
-#   {
-#     "symptom": "weakness",
-#     "duration": "1 day"
-#   },
-#   {
-#     "symptom": "cough",
-#     "duration": "2 days"
-#   },
-#   {
-#     "symptom": "chest pain",
-#     "duration": "1 days"
-#   },
-#   {
-#     "symptom": "headache",
-#     "duration": "1 days"
-#   }
-# ]

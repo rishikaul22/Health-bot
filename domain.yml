@@ -2,11 +2,16 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
+- prognosis_disease:
+    use_entities:
+      - disease
 - want_to_login_affirm
+- greet
+- water_reminder
+- acc_disease
 - tell_email:
     use_entities:
     - email
-- greet
 - faq:
     is_retrieval_intent: true
 - ask_lower_stress
@@ -14,6 +19,7 @@ intents:
 - goodbye
 - affirm
 - deny
+# - EXTERNAL_reminder
 - out_of_scope
 - thankyou
 - want_to_register_affirm
@@ -203,6 +209,11 @@ actions:
 - utter_name
 - validate_symptoms_form
 - action_info
+- action_water_reminder
+- action_set_reminder
+- action_acc_disease_reminder
+- action_prog_disease_info
+- action_disease_info_reminder
 forms:
   profile_form:
     name:
