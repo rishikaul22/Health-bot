@@ -1,8 +1,10 @@
 import pandas as pd
 import wikipedia
 
-data = pd.read_csv(r'C:\\Users\\Khushi\\Desktop\\Frameworks\\Rasa\\HealthBot\\backend\\Disease_Sheet.csv',encoding='utf-8')
-info = pd.read_csv(r'C:\\Users\\Khushi\\Desktop\\Frameworks\\Rasa\\HealthBot\\backend\\symptom_Description.csv')
+# data = pd.read_csv(r'C:\\Users\\Khushi\\Desktop\\Frameworks\\Rasa\\HealthBot\\backend\\Disease_Sheet.csv',encoding='utf-8')
+# info = pd.read_csv(r'C:\\Users\\Khushi\\Desktop\\Frameworks\\Rasa\\HealthBot\\backend\\symptom_Description.csv')
+data = pd.read_csv(r'/Users/rishikaul/Desktop/Health-bot/backend/Disease_Sheet.csv',encoding='utf-8')
+info = pd.read_csv(r'/Users/rishikaul/Desktop/Health-bot/backend/symptom_Description.csv')
 
 string = "please undergo {} after consulting your doctor"
 
@@ -46,8 +48,6 @@ def get_home_remedies(disease):
 
       if desc == "Nothing" or len(desc) == 0 or len(desc) == 1:
         desc = get_diet(disease)
-
-        
   return desc
 
 def get_diet(disease):
@@ -56,6 +56,14 @@ def get_diet(disease):
     if row['Diseases'].lower() == disease.lower():
       print("HELLO")
       desc = "Diet Tips for {} : \n".format(disease.title()) + row['Diet']
+  return desc
+
+def get_symptoms(disease):
+  desc = ""
+  for index, row in data.iterrows():
+    if row['Diseases'].lower() == disease.lower():
+      print("HELLO")
+      desc = "Symptoms for {} : \n".format(disease.title()) + row['Symptoms']
   return desc
 
 def get_info(disease):
@@ -69,19 +77,19 @@ def get_info(disease):
 
   for index, row in data.iterrows():
     if row['Diseases'].lower() == disease.lower():
-      information += disease.title() + "\n"
+      information += disease.title() + "\n\n"
 
       if desc:
-        information += "Description : " + desc + "\n"
+        information += "Description : " + desc + "\n\n"
       else:
         desc = wikipedia.summary(disease)
-        information += "Description : " + desc + "\n"
+        information += "Description : " + desc + "\n\n"
 
-      information += "Symptoms : " + row['Symptoms'] + "\n"
-      information += "Duration : " + row['Duration'] + '\n'
-      information += "Preventive Measures : " + row['Prevention'] + "\n"
-      information += "Diet during Disease : " + row['Diet'] + '\n'
-      information += "Treatment : " + row['Treatment'] + '\n'
+      information += "Symptoms : " + row['Symptoms'] + "\n\n"
+      information += "Duration : " + row['Duration'] + '\n\n'
+      information += "Preventive Measures : " + row['Prevention'] + "\n\n"
+      information += "Diet during Disease : " + row['Diet'] + '\n\n'
+      information += "Treatment : " + row['Treatment']
 
       return information
       
@@ -92,7 +100,7 @@ def get_info(disease):
 def preprocessing(symptomsList):
   sympList = list()
   for symp in symptomsList:
-    symptom = symp["symptom"]
+    symptom = symp["symptom"].lower()
     duration = symp["duration"]
     sympList.append((symptom, duration))
   
@@ -122,60 +130,105 @@ def prediction(symptoms, user):
           
       if user["frequent_cold"] == "yes":
         return {
+          'flag' : 0,
           "Normal Cold" : "Since you get cold very often, having frequent steam sessions and using nasal decongestants would help. "
         }
       elif user["frequent_cold"] == "no" and processedSymptoms[0][1] <= 4:
         return {
+          'flag' : 0,
           "Normal Cold" : "Try to have frequent steam sessions and use nasal decongestants for instant relief. If it doesn't subside within 1-2 days, try contacting a doctor."
         }
       else:
         return {
+          'flag' : 0,
           "Cold" : "Since you do not have cold very often and it has been more than 4 days, its preferrable to visit a doctor"
         }
       
     if processedSymptoms[0][0] == "cough":
       if user["frequent_cough"] == "yes":
-            return {
+        return {
+          'flag' : 0,
           "Normal Cough" : "Since you get cough very often, drinking boiled water and gargling with hot water would help. "
         }
       elif user["frequent_cough"] == "no" and processedSymptoms[0][1] <= 4:
         return {
+          'flag' : 0,
           "Normal Cough" : "Try to drink boiled water and gargle with hot water for some relief. If it doesn't subside within 1-2 days, try contacting a doctor."
         }
       else:
         return {
+          'flag' : 0,
           "Cough" : "Since you do not get cough very often and it has been more than 4 days, its preferrable to visit a doctor"
         }
     if processedSymptoms[0][0] == "fever":
       if processedSymptoms[0][1] <= 2:
         return {
+          'flag' : 0,
           "Fever" : "Having any paracetemol like crocin might give you instant relief. If it doesn't subside today, try contacting a doctor."
         }
       else:
         return {
+          'flag' : 0,
           "Fever" : "Since you've had fever for more than 2 days, its preferrable to visit a doctor."
         }
     if processedSymptoms[0][0] == "headache":
       if user["migraine"] == "yes":
-            return {
+        return {
+          'flag' : 0,
           "Normal Headache" : "Since you have a past medical history with migraine, having frequent steam sessions and using nasal decongestants would help. "
         }
       elif user["frequent_cough"] == "no" and processedSymptoms[0][1] <= 4:
         return {
+          'flag' : 0,
           "Normal Cough" : "Try to have frequent steam sessions and use nasal decongestants for instant relief. If it doesn't subside within 1-2 days, try contacting a doctor."
         }
       else:
         return {
+          'flag' : 0,
           "Cough" : "Since you do not have cold very often and it has been more than 4 days, its preferrable to visit a doctor"
         }
     if processedSymptoms[0][0] == "legpain" or processedSymptoms[0][0] == "body pain" or processedSymptoms[0][0] == "bodypain" or processedSymptoms[0][0] == "leg pain":
       return {
+        'flag' : 0,
         "Body Ache": "Having any paracetemol like crocin might give you instant relief. If it doesn't subside today, try contacting a doctor."
       }
       
-
   elif symptomLen == 2:
-    pass
+    processedSymptoms.sort(key = lambda x: x[0])
+    # [('cold', 2), ('cough', 3), ('fever', 2)]
+    if processedSymptoms[0][0] == "cold" and processedSymptoms[1][0] == "cough":
+      if processedSymptoms[0][1] <= 2:
+        return {
+          'flag' : 0,
+          "Cold & Cough": "Since it has been consistent for {} days, you can take normal medications for 1-2 days. If yet not cured you may visit a nearby doctor.".format(processedSymptoms[2][1])
+        }
+      else:
+        return {
+          'flag' : 0,
+          "Cold & Cough" : "Since it has been for more than 4 days it is advised to contact any nearby doctor for proper diagnosis"
+        }
+    if processedSymptoms[0][0] == "cold" and processedSymptoms[1][0] == "fever":
+      if processedSymptoms[0][1] <= 2:
+        return {
+          'flag' : 0,
+          "Viral": "Since fever has been consistent for {} days along with cold, it seems to be viral. Contact your nearby doctor and medications and treatment.".format(processedSymptoms[2][1])
+        }
+      else:
+        return {
+          'flag' : 0,
+          "Fever Profile" : "Since fever has been for more than 3 days along with cold it is advised to contact any nearby doctor and take prescription for fever profile blood test"
+        }
+    if processedSymptoms[0][0] == "cough" and processedSymptoms[1][0] == "fever":
+      if processedSymptoms[0][1] <= 2:
+        return {
+          'flag' : 0,
+          "Viral": "Since fever has been consistent for {} days along with cough, it seems to be viral. Contact your nearby doctor and medications and treatment.".format(processedSymptoms[2][1])
+        }
+      else:
+        return {
+          'flag' : 0,
+          "Fever Profile" : "Since fever has been for more than 3 days along with cough it is advised to contact any nearby doctor and take prescription for fever profile blood test"
+        }
 
   elif symptomLen == 3:
     processedSymptoms.sort(key = lambda x: x[0])
@@ -183,15 +236,18 @@ def prediction(symptoms, user):
     if processedSymptoms[0][0] == "cold" and processedSymptoms[1][0] == "cough" and processedSymptoms[2][0] == "fever":
       if processedSymptoms[2][1] <= 3:
         return {
+          'flag' : 0,
           "Viral": "Since fever has been consistent for {} days, it seems to be viral. Contact your nearby doctor and medications and treatment.".format(processedSymptoms[2][1])
         }
       else:
         return {
+          'flag' : 0,
           "Fever Profile" : "Since fever has been for more than 4 days it is advised to contact any nearby doctor and take prescription for fever profile blood test"
         }
 
   print(processedSymptoms) 
   matches = match(processedSymptoms)
+  print(matches)
   sorted_tuples = sorted(matches.items(), key=lambda item: item[1], reverse = True)
   sorted_dict = {k: v for k, v in sorted_tuples}
   count = 0
@@ -204,7 +260,10 @@ def prediction(symptoms, user):
         break
   # for k, v in result.items():
     # print(v)
-  return result
+  res = dict()
+  res['dis'] = result
+  res['flag'] = 1
+  return res
 
 # Cold, Cough and Fever
 # if <= 3 days => viral

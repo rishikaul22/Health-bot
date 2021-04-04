@@ -15,7 +15,7 @@ from rasa_sdk.events import SlotSet, EventType
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormValidationAction
 import webbrowser
-from backend.prediction import get_info, get_preventive_measures, get_home_remedies, get_diet
+from backend.prediction import get_info, get_preventive_measures, get_home_remedies, get_diet, get_symptoms
 from backend.unique_symptoms import unique
 import datetime
 from rasa_sdk.events import ReminderScheduled
@@ -163,22 +163,42 @@ class SymptomsFormSubmit(Action):
         if type(email) == list:
             email = email[0]
         resp = predict(allsymptoms, email)
-        print(resp.json())
-        dispatcher.utter_message(template="utter_symptom_form_values",
-                                 symptoms=resp.json())
+        
+        print(resp.json()['flag'])
+        text = ""
+        if resp.json()['flag'] == 1:
+            print(resp.json()['dis'])
+            text = "Here is your disease prognosis info : {}\nDo you want to clear out your symptoms ?".format(resp.json()['dis'])
+        else:
+            temp = resp.json().copy()
+            del temp['flag']
+            text = "Here is your disease prognosis info : {}\nDo you want to clear out your symptoms ?".format(temp)
+            
+        dispatcher.utter_message(text = text)
         date = datetime.datetime.now() + datetime.timedelta(seconds=15)
         entities = tracker.latest_message.get("entities")
-       
 
-        reminder = ReminderScheduled(
-            "acc_disease",
-            trigger_date_time=date,
-            entities=entities,
-            name="acc_disease_reminder",
-            kill_on_user_message=False,
-        )
-        print("disease reminder scheduled.")
-        return [reminder]
+        if resp.json()['flag'] == 0:
+            return [
+                SlotSet('symptoms', None),
+                SlotSet('more_symptoms', None),
+                SlotSet('duration', None)
+            ]
+        else:
+            reminder = ReminderScheduled(
+                "acc_disease",
+                trigger_date_time=date,
+                entities=entities,
+                name="acc_disease_reminder",
+                kill_on_user_message=False,
+            )
+            print("disease reminder scheduled.")
+            return [
+                reminder,
+                SlotSet('symptoms', None),
+                SlotSet('more_symptoms', None),
+                SlotSet('duration', None)
+            ]
 
 class ValidateSymptomsForm(FormValidationAction):
     def name(self):
@@ -246,7 +266,12 @@ class ValidateSymptomsForm(FormValidationAction):
                 print("IN HERE")
                 symptom = removeAmbiguousSymptom(symptom)
 
-        return {"symptoms" : symptom}
+        print("RESETING SLOTS")
+        return {
+            "symptoms" : symptom,
+            "more_symptoms": None,
+            "duration": None,
+        }
 
     def validate_duration(
         self,
@@ -286,7 +311,26 @@ class ValidateSymptomsForm(FormValidationAction):
             days = 1
 
         return {"duration": days}
+
+class ActionResetSymptoms(Action):
     
+    def name(self):
+        return "action_reset_symptoms"
+
+    def run(self, dispatcher, tracker: Tracker, domain: "DomainDict"):
+        intent = tracker.latest_message['intent'].get('name')
+        print(intent)
+        if intent == 'affirm':
+            print("IN AFFIRM")
+            dispatcher.utter_message(text = 'Symptoms Cleared..')
+            return [
+                SlotSet('all_symptoms', None)
+            ]
+        else:
+            print("IN DENY")
+            dispatcher.utter_message(text = 'Okay')
+            return []
+
 class Login(Action):
     def name(self):
         return "action_login"
@@ -411,8 +455,20 @@ class Information(Action):
 
     def run(self, dispatcher, tracker: Tracker, domain: "DomainDict"):
         disease = tracker.get_slot('disease')
-        info = get_info(disease)
+        intent = tracker.latest_message['intent'].get('name')
+        print(intent)
+        info = ""
+        if intent == 'take_home_remedies':
+            info = get_home_remedies(disease)
+        elif intent == 'take_diet':
+            info = get_diet(disease)
+        elif intent == 'take_prevention':
+            info = get_preventive_measures(disease)
+        elif intent == 'take_disease_symptoms':
+            info = get_symptoms(disease)
+        else:
+            info = get_info(disease)
+
         print(info)
-        # print(type(info))/
-        dispatcher.utter_message(template = "utter_disease_info",desc = info)
+        dispatcher.utter_message(text = info)
         

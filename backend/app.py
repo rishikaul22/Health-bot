@@ -94,7 +94,9 @@ class Prediction(Resource):
         email = data["email"]
         user = UserTable.find_one({'email': email})
         diseases = prediction(symptoms, user)
-        dis = list(diseases.keys())
+        if diseases['flag'] == 0:
+            return jsonify(diseases)
+        dis = list(diseases['dis'].keys())
         update = UserTable.update_one(
             {'email': email},
             {"$set": {'prognosed_diseases': dis}}

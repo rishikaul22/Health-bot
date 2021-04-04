@@ -52,6 +52,19 @@ intents:
     - duration
     - severity
     - symptoms
+- take_home_remedies:
+    use_entities:
+    - disease
+- take_diet:
+    use_entities:
+    - disease
+- take_prevention:
+    use_entities:
+    - disease
+- take_disease_symptoms:
+    use_entities:
+    - disease
+
 entities:
 - blood_pressure
 - diabetes
@@ -164,14 +177,43 @@ responses:
   - text: What is your email ?
   utter_ask_blood_pressure:
   - text: Do you have blood pressure ? If yes, is it high or low ? If no, please say normal
+    buttons:
+      - title: "Low"
+        payload: '/low_value{"blood_pressure": "low"}'
+      - title: "High"
+        payload: '/high_value{"blood_pressure": "high"}'
+      - title: "Normal"
+        payload: '/normal_value{"blood_pressure": "normal"}'
   utter_ask_migraine:
   - text: Do you have migraine?
+    buttons:
+      - title: "Yes"
+        payload: '/affirm{"migraine" : "yes"}'
+      - title: "No"
+        payload: '/deny{"migraine" : "no"}'
   utter_ask_diabetes:
   - text: Do you have Diabetes? If yes, please mention whether it is high or low, If no, please answer no
+    buttons:
+      - title: "No"
+        payload: '/deny{"diabetes": "no"}'
+      - title: "High"
+        payload: '/high_value{"diabetes": "high"}'
+      - title: "Normal"
+        payload: '/normal_value{"diabetes": "normal"}'
   utter_ask_frequent_cold:
   - text: Do you experience frequent cold?
+    buttons:
+      - title: "Yes"
+        payload: '/affirm{"frequent_cold" : "yes"}'
+      - title: "No"
+        payload: '/deny{"frequent_cold" : "no"}'
   utter_ask_frequent_cough:
   - text: Do you experience frequent cough?
+    buttons:
+      - title: "Yes"
+        payload: '/affirm{"frequent_cough" : "yes"}'
+      - title: "No"
+        payload: '/deny{"frequent_cough" : "no"}'
   utter_form_values:
   - text: "Here is your info : \nName - {name}\nContact - {number}\nEmail - {email}\nBP - {blood_pressure}\nDiabetes - {diabetes}\nCold - {frequent_cold}\nCough - {frequent_cough}\nmigraine-{migraine}"
   utter_ask_symptoms:
@@ -200,6 +242,10 @@ responses:
   - text: "Please login for better performance"
   utter_disease_info:
   - text: "{desc}"
+  utter_disease_diet:
+  - text: "Testing disease diet successful!!"
+  utter_disease_home_remedies:
+  - text: "Successfully Captured Intent"
 actions:
 - action_login
 - action_submit
@@ -214,6 +260,7 @@ actions:
 - action_acc_disease_reminder
 - action_prog_disease_info
 - action_disease_info_reminder
+- action_reset_symptoms
 forms:
   profile_form:
     name:

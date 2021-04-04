@@ -4,8 +4,9 @@ import json
 def removeAmbiguousSymptom(symptom):
     
     print(symptom)
-
-    if symptom == 'pain in muscles':
+    if symptom == 'feverish':
+        symptom = 'fever'
+    elif symptom == 'pain in muscles':
         symptom = 'muscle pain'
     elif symptom == 'cramps in stomach':
         symptom = 'stomach cramps'
@@ -43,6 +44,12 @@ def removeAmbiguousSymptom(symptom):
         symptom = 'poor concentration'
     elif symptom == 'irritated':
         symptom = 'irritability'
+    elif symptom == 'unclear vision' or symptom == 'unable to see':
+        symptom = 'distorted vision'
+    elif symptom == 'itchiness':
+        symptom = 'itching'
+    elif symptom == 'red eyes':
+        symptom = 'redness in eyes'
 
     print(symptom)
     return symptom

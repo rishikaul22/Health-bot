@@ -17,6 +17,11 @@ nlu:
 - intent: faq/bot_challenge
   examples: |
     - Who are you?
+    - What is your name?
+    - What is ur name?
+    - tell me your name
+    - who am i talking to
+    - who am i speaking with
     - are you a bot?
     - are you a human?
     - am I talking to a bot?-
@@ -83,6 +88,7 @@ nlu:
 - intent: deny
   examples: |
     - no
+    - no.
     - n
     - never
     - n I don't think so
@@ -166,6 +172,17 @@ nlu:
     - people call me [Shubham Shetty](name)
     - people call me [Ebrahim Hirani](name)
     - people call me [Karan Shah](name)
+    - [Viraj Shah](name)
+    - [Rishi Kaul](name)
+    - [Priyav Mehta](name)
+    - [Harsh Jain](name)
+    - [Khushi Jashnani](name)
+    - [Harshad Mehta](name)
+    - [Nilesh Kaul](name)
+    - [Purnima Mehta](name)
+    - [Pravin Mehta](name)
+    - [Asmi Mehta](name)
+    - [Suhani Mehta](name)
 - intent: tell_phone_number
   examples: |
     - My phone number is [8928691948](number)
@@ -398,6 +415,9 @@ nlu:
     - I'm having a [difficulty in breathing](symptoms) since [3 weeks](duration).
     - I'm [vomiting](symptoms) since [1 day](duration).
     - I'm having [fever](symptoms).
+    - I'm having [cold](symptoms).
+    - I am having [joint pain](symptoms).
+    - I'm having a [headache](symptoms).
     - I feel like [vomiting](symptoms).
     - I'm facing [neck pain](symptoms).
 - intent: take_disease
@@ -438,6 +458,89 @@ nlu:
     - give me information about [Glaucoma](disease)
     - i want to know about [Glaucoma](disease)
     - what is [Glaucoma](disease)
+
+- intent: take_disease_symptoms
+  examples: |
+    - i need symptoms for [Alopecia](disease)
+    - show me the symptoms for [Alopecia](disease)
+    - tell me the symptoms [Alopecia](disease)
+    - give me the symptoms for [Alopecia](disease)
+    - what all symptoms do I get during [Malaria](disease)
+    - what all symptoms can I expect during [Malaria](disease)
+    - show me diet recommendations for [Malaria](disease)
+    - Symptoms for [Dengue](disease)
+    - give symptoms for [Dengue](disease)
+    - [Dengue](disease) symptoms
+    - [Mumps](disease) symptoms
+    - i need symptoms for [Glaucoma](disease)
+    - show me the symptoms for [Glaucoma](disease)
+    - tell me the symptoms [Glaucoma](disease)
+    - give me the symptoms for [Glaucoma](disease)
+    - what all symptoms do I get during [Diarrhoea](disease)
+    - what all symptoms can I expect during [Diarrhoea](disease)
+    - show me diet recommendations for [Diarrhoea](disease)
+    - Symptoms for [Jaundice](disease)
+    - give symptoms for [Jaundice](disease)
+    - [Jaundice](disease) symptoms
+    - [Aphasia](disease) symptoms
+- intent: take_home_remedies
+  examples: |
+    - what are the home remedies for [Alopecia](disease)
+    - give me the home remedies for [Alopecia](disease)
+    - home remedies for [Alopecia](disease)
+    - [Alopecia] home remedies
+    - what are the home remedies for [Malaria](disease)
+    - give me the home remedies for [Malaria](disease)
+    - home remedies for [Malaria](disease)
+    - [Malaria] home remedies
+    - what are the home remedies for [Coronavirus](disease)
+    - give me the home remedies for [Coronavirus](disease)
+    - home remedies for [Coronavirus](disease)
+    - [Coronavirus] home remedies
+    - what are the home remedies for [Dengue](disease)
+    - give me the home remedies for [Dengue](disease)
+    - home remedies for [Dengue](disease)
+    - [Dengue] home remedies
+    - what are the home remedies for [Mumps](disease)
+    - give me the home remedies for [Mumps](disease)
+    - home remedies for [Mumps](disease)
+    - [Mumps] home remedies
+    - what are the home remedies for [Sinusitis](disease)
+    - give me the home remedies for [Sinusitis](disease)
+    - home remedies for [Sinusitis](disease)
+    - [Sinusitis] home remedies
+    - what are the home remedies for [Diarrhoea](disease)
+    - give me the home remedies for [Diarrhoea](disease)
+    - home remedies for [Diarrhoea](disease)
+    - what are the home remedies for [food poisoning](disease)
+    - give me the home remedies for [food poisoning](disease)
+    - home remedies for [food poisoning](disease)
+- intent: take_prevention
+  examples: |
+    - what are the preventive measures for [Gout](disease)
+    - suggest measures to prevent [Gout](disease)
+    - prevention methods for [Gout](disease)
+    - how to prevent [Tachycardia](disease)
+    - what all can i do to prevent [Tachycardia](disease)
+    - what food can i eat during [Tachycardia](disease)
+    - what are the preventive measures for [Mumps](disease)
+    - suggest measures to prevent [Mumps](disease)
+    - prevention methods for [Mumps](disease)
+    - how to prevent [Measles](disease)
+    - what all can i do to prevent [Measles](disease)
+    - what food can i eat during [Measles](disease)
+    - what are the preventive measures for [Diarrhoea](disease)
+    - suggest measures to prevent [Diarrhoea](disease)
+    - prevention methods for [Diarrhoea](disease)
+    - how to prevent [Coronavirus](disease)
+    - what all can i do to prevent [Coronavirus](disease)
+    - what food can i eat during [Coronavirus](disease)
+    - what are the preventive measures for [Jaundice](disease)
+    - suggest measures to prevent [Jaundice](disease)
+    - prevention methods for [Jaundice](disease)
+    - how to prevent [Dengue](disease)
+    - what all can i do to prevent [Dengue](disease)
+    - what food can i eat during [Dengue](disease)
 - regex: email
   examples: |
     - ^[a-zA-Z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$
@@ -446,6 +549,7 @@ nlu:
     - \d{10}
 - lookup: symptoms
   examples: |
+    - feverish
     - pain in breast
     - stomach pain
     - stomach ache
@@ -657,8 +761,10 @@ nlu:
     - neck is swollen
     - legpain
     - leg pain
-
-    
+    - itchiness
+    - red eyes
+    - unable to see
+    - unclear vision
 - lookup: severity
   examples: |
     - severe

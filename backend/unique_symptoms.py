@@ -201,3 +201,28 @@ unique = [
 # - unable to focus
 # - irritated
 # ]
+
+# - intent: take_diet
+#   examples: |
+#     - i need a diet plan for [Alopecia](disease)
+#     - show me a diet plan for [Alopecia](disease)
+#     - tell me what should I eat during [Alopecia](disease)
+#     - give me diet recommendations for [Alopecia](disease)
+#     - what all can i eat during [Malaria](disease)
+#     - what food can i eat during [Malaria](disease)
+#     - show me diet recommendations for [Malaria](disease)
+#     - diet plan for [Dengue](disease)
+#     - diet recommendation for [Dengue](disease)
+#     - [Dengue](disease) diet recommendations
+#     - [Mumps](disease) diet plan
+#     - i need a diet plan for [Mumps](disease)
+#     - show me a diet plan for [Mumps](disease)
+#     - tell me what should I eat during [Jaundice](disease)
+#     - give me diet recommendations for [Jaundice](disease)
+#     - what all can i eat during [Jaundice](disease)
+#     - what food can i eat during [Diarrhoea](disease)
+#     - show me diet recommendations for [Diarrhoea](disease)
+#     - diet plan for [Diarrhoea](disease)
+#     - diet recommendation for [Glaucoma](disease)
+#     - [Glaucoma](disease) diet recommendations
+#     - [Glaucoma](disease) diet plan

@@ -12,6 +12,24 @@ rules:
       - action: utter_faq
     wait_for_user_input: false
 
+  - rule: respond to disease home remedies
+    steps:
+      - intent: take_home_remedies
+      - action: action_info
+
+  - rule: respond to disease diet
+    steps:
+      - intent: take_diet
+      - action: action_info
+  - rule: respond to disease symptom
+    steps:
+      - intent: take_disease_symptoms
+      - action: action_info
+  - rule: respond to prevention
+    steps:
+      - intent: take_prevention
+      - action: action_info
+
   - rule: Activate form
     steps:
     - intent: want_to_register_affirm
@@ -72,7 +90,11 @@ rules:
       - slot_was_set:
           - requested_slot: null
       - action: action_symptoms_form_submit
-      - action: utter_symptom_form_values
+      # - action: utter_symptom_form_values
+      - or:
+        - intent: deny
+        - intent: affirm
+      - action: action_reset_symptoms
 
   - rule: Submit_login_form
     condition:
@@ -125,7 +147,7 @@ rules:
     steps:
     - intent: disease_info_reminder
     - action: action_disease_info_reminder
-
+  
 
 # - rule: registration_discontinue
 #   condition:
