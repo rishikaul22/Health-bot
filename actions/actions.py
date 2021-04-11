@@ -89,9 +89,34 @@ class ActionSubmit(Action):
 
         print(name)
         print(type(name))
+        
+        if type(name) == str:
+            name = name.split(" ")
+        print(type(name))
         if type(name) == list:
-            name = ' '.join(name)
-            name = name.title()
+            if len(name) == 1:
+                name = name[0]
+            if len(name) == 2 : 
+                name1 = name[0].split(" ")
+                if len(name1) == 2:
+                    name = name[0]
+                else:
+                    if name[0] == name[1]:
+                        name = name[0]
+                    else:
+                        name = name[0] + " " + name[1]
+                name = name.title()
+            else:
+                name1 = name[0].split(" ")
+                if len(name1) == 2:
+                    name = name[0]
+                elif len(name[1].split(" ")) == 2:
+                    name = name[1]
+                else:
+                    if name[0] == name[1]:
+                        name = name[0]
+                    else:
+                        name = name[0] +" " + name[1]
 
         if type(number) == list:
             number = number[0]
@@ -112,6 +137,7 @@ class ActionSubmit(Action):
             migraine=migraine
         )
         print(resp)
+        dispatcher.utter_message(text= "Yay you're now logged in! You may ask any queries that you have or start expressing any problems that you might be facing")
         dispatcher.utter_message(template="utter_form_values",
                                  name=name,
                                  number=number,
@@ -322,13 +348,13 @@ class ActionResetSymptoms(Action):
         print(intent)
         if intent == 'affirm':
             print("IN AFFIRM")
-            dispatcher.utter_message(text = 'Symptoms Cleared..')
+            dispatcher.utter_message(text = 'Symptoms Cleared.\nIf you have any other symptoms or want information about some disease, feel free to text.')
             return [
                 SlotSet('all_symptoms', None)
             ]
         else:
             print("IN DENY")
-            dispatcher.utter_message(text = 'Okay')
+            dispatcher.utter_message(text = 'Okay.\nIf you have any other symptoms or want information about some disease, feel free to text.')
             return []
 
 class Login(Action):

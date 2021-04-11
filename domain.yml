@@ -159,8 +159,6 @@ responses:
   - text: "Login successful. \nHow can I help you?"
   utter_faq/bot_develop:
   - text: " I help people. I am used to diagnose various diseases based on user's symptoms. I have been developed by Khushi, Priyav and Rishi for their minor project."
-  utter_faq/ask_weather:
-  - text: Its really a cold weather!!
   utter_faq/bot_challenge:
   - text: I am a bot, powered by Rasa.
   utter_continue:
@@ -226,6 +224,11 @@ responses:
   - text: "Here is your disease prognosis info : {symptoms}\n"
   utter_ask_more_symptoms:
   - text: Do you have any more symptoms ?
+    buttons:
+      - title: "Yes"
+        payload: '/affirm{"more_symptoms" : "yes"}'
+      - title: "No"
+        payload: '/deny{"more_symptoms" : "no"}'
   utter_goodbye:
   - text: Bye
   utter_no_worries:

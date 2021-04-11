@@ -200,7 +200,7 @@ def prediction(symptoms, user):
       if processedSymptoms[0][1] <= 2:
         return {
           'flag' : 0,
-          "Cold & Cough": "Since it has been consistent for {} days, you can take normal medications for 1-2 days. If yet not cured you may visit a nearby doctor.".format(processedSymptoms[2][1])
+          "Cold & Cough": "Since it has been consistent for {} days, you can take normal medications for 1-2 days. If yet not cured you may visit a nearby doctor.".format(processedSymptoms[0][1])
         }
       else:
         return {
@@ -208,26 +208,26 @@ def prediction(symptoms, user):
           "Cold & Cough" : "Since it has been for more than 4 days it is advised to contact any nearby doctor for proper diagnosis"
         }
     if processedSymptoms[0][0] == "cold" and processedSymptoms[1][0] == "fever":
-      if processedSymptoms[0][1] <= 2:
+      if processedSymptoms[1][1] <= 3:
         return {
           'flag' : 0,
-          "Viral": "Since fever has been consistent for {} days along with cold, it seems to be viral. Contact your nearby doctor and medications and treatment.".format(processedSymptoms[2][1])
+          "Viral": "Since fever has been consistent for {} days along with cold, it seems to be viral. Contact your nearby doctor and medications and treatment.".format(processedSymptoms[1][1])
         }
       else:
         return {
           'flag' : 0,
-          "Fever Profile" : "Since fever has been for more than 3 days along with cold it is advised to contact any nearby doctor and take prescription for fever profile blood test"
+          "Fever Profile" : "Since fever has been for more than 4 days along with cold it is advised to contact any nearby doctor and take prescription for fever profile blood test"
         }
     if processedSymptoms[0][0] == "cough" and processedSymptoms[1][0] == "fever":
-      if processedSymptoms[0][1] <= 2:
+      if processedSymptoms[1][1] <= 3:
         return {
           'flag' : 0,
-          "Viral": "Since fever has been consistent for {} days along with cough, it seems to be viral. Contact your nearby doctor and medications and treatment.".format(processedSymptoms[2][1])
+          "Viral": "Since fever has been consistent for {} days along with cough, it seems to be viral. Contact your nearby doctor and medications and treatment.".format(processedSymptoms[1][1])
         }
       else:
         return {
           'flag' : 0,
-          "Fever Profile" : "Since fever has been for more than 3 days along with cough it is advised to contact any nearby doctor and take prescription for fever profile blood test"
+          "Fever Profile" : "Since fever has been for more than 4 days along with cough it is advised to contact any nearby doctor and take prescription for fever profile blood test"
         }
 
   elif symptomLen == 3:
